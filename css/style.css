@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "Ubuntu";
+    src: url("../fonts/Ubuntu-R.ttf");
+}
+
+.ubuntu-title {
+	font-family: "Ubuntu";
+	font-size: 5vw;
+}
+
+.ubuntu-text {
+	font-family: "Ubuntu";
+	font-size: 24pt;
+}
+
+.masthead {
+    background-image: url("../img/bckground.jpg") !important;
+    background-size: auto !important;
+}
