@@ -1,0 +1,278 @@
+<link rel="stylesheet" type="text/css" href="dist/semantic/calendar.min.css">
+
+<div class="ui container" style="padding-top: 1vh">
+	<div class="ui one column middle center aligned grid">
+
+		{{MNEMONICO_ICON_VOLTAR}}
+
+		<div class="twelve wide mobile teen wide tablet eight wide computer column">
+			<form class="ui form" id="FormView" name="FormView" method="POST">
+
+				<div class="field">
+					<label class="titulo-medio">Nome Completo</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							class="caixa-alta"
+							name="NomeCompleto"
+							id="NomeCompleto" 
+							maxlength="80" 
+							onchange="formatToUpperCase( this );" 
+						placeholder="Nome Completo">
+					</div>
+				</div>	<!-- NOME COMPLETO -->
+
+				<div class="field">
+					<label class="titulo-medio">CPF</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							name="CPF"
+							id="CPF"
+						placeholder="CPF">
+					</div>
+				</div>	<!-- CPF -->
+
+				<div class="field">
+					<label class="titulo-medio">Data de Nascimento</label>
+					<div class="ui calendar" id="CalendarioDataNascimento">
+						<div class="ui input left icon">
+							<i class="calendar icon"></i>
+							<input 
+								type="text"
+								name="DataNascimento"
+								id="DataNascimento" 
+							placeholder="Para alterar ano clicar nele">
+						</div>
+					</div>
+				</div>	<!-- DATA NASCIMENTO -->
+
+				<div id="selectEtnia" class="field">
+					<label class="titulo-medio">Como você se considera etnicamente?</label>
+					<select 
+						class="ui fluid search dropdown" 
+						name="UsuarioEtnia"
+					id="UsuarioEtnia">
+
+						{{MNEMONICO_SELECT_ETNIA}}
+
+					</select>
+				</div>	<!-- SELECT ETNIA -->
+
+				<div id="selectGenero" class="field">
+					<label class="titulo-medio">Gênero</label>
+					<select 
+						class="ui fluid search dropdown" 
+						name="UsuarioGenero"
+					id="UsuarioGenero">
+
+						{{MNEMONICO_SELECT_GENERO}}
+
+					</select>
+				</div>	<!-- SELECT GENERO -->
+
+				<div class="field">
+					<label class="titulo-medio">WhatsApp</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							name="UsuarioTelefone"
+							id="UsuarioTelefone" 
+						placeholder="(99) 9 9999-9999">
+					</div>
+				</div>	<!-- WHATSAPP -->
+
+				<div id="selectEscolaridade" class="field">
+					<label class="titulo-medio">Escolaridade</label>
+					<select 
+						class="ui fluid search dropdown" 
+						name="UsuarioEscolaridade"
+					id="UsuarioEscolaridade">
+
+						{{MNEMONICO_SELECT_ESCOLARIDADE}}
+
+					</select>
+				</div>	<!-- SELECT ESCOLARIDADE -->
+
+				<div class="field">
+					<label class="titulo-medio">CEP</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							name="CEP"
+							id="CEP" 
+							onchange="getEndereco( $( this ).val() );" 
+						placeholder="CEP">
+					</div>
+				</div>	<!-- CEP -->
+
+				<div class="field">
+					<label class="titulo-medio">Logradouro</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							class="caixa-alta"
+							name="Logradouro"
+							id="Logradouro" 
+							onchange="formatToUpperCase( this );" 
+						placeholder="Logradouro">
+					</div>
+				</div>	<!-- LOGRADOURO -->
+
+				<div class="field">
+					<label class="titulo-medio">Número</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							name="Numero"
+							id="Numero" 
+						placeholder="Número">
+					</div>
+				</div>	<!-- NUMERO -->
+
+				<div class="field">
+					<label class="titulo-medio">Complemento</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							class="caixa-alta"
+							name="Complemento"
+							id="Complemento" 
+							onchange="formatToUpperCase( this );"
+						placeholder="Complemento">
+					</div>
+				</div>	<!-- COMPLEMENTO -->
+
+				<div class="field">
+					<label class="titulo-medio">Bairro</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							class="caixa-alta"
+							name="Bairro"
+							id="Bairro" 
+							onchange="formatToUpperCase( this );"
+						placeholder="Bairro">
+					</div>
+				</div>	<!-- BAIRRO -->
+
+				<div class="field">
+					<label class="titulo-medio">Cidade</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							class="caixa-alta"
+							name="Cidade"
+							id="Cidade" 
+							onchange="formatToUpperCase( this );"
+						placeholder="Cidade">
+					</div>
+				</div>	<!-- CIDADE -->
+
+				<div class="field">
+					<label class="titulo-medio">E-mail</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							class="caixa-baixa" 
+							name="EmailAdress"
+							id="EmailAdress" 
+							onchange="checkEmailAdress( this );" 
+						placeholder="Endereço E-mail">
+					</div>
+				</div>	<!-- ENDEREÇO EMAIL -->
+
+				<div class="field">
+					<label class="titulo-medio">Tipo de Cadastro</label>
+					<select 
+						class="ui dropdown" 
+						name="TipoUsuario"
+						onchange="checkNewUserType();" 
+					id="TipoUsuario">
+
+						{{MNEMONICO_SELECT_USER_TYPE}}
+
+					</select>
+				</div>	<!-- TIPO USUARIO -->
+
+				<div id="SelectDisciplina" class="field hide">
+					<label class="titulo-medio">Dou aula de...</label>
+					<select 
+						class="ui fluid search dropdown" 
+						name="Disciplinas[]"
+						id="Disciplinas" 
+					multiple="">
+
+						{{MNEMONICO_SELECT_DISCIPLINA}}
+
+					</select>
+				</div>	<!-- DISCIPLINAS -->
+
+				<div class="field hide" id="InputEscEnsinoMedio">
+					<label class="titulo-medio">Escola onde estuda ou estudou</label>
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							class="caixa-alta"
+							name="EscolaEnsinoMedio"
+							id="EscolaEnsinoMedio" 
+							onchange="formatToUpperCase( this );"
+						placeholder="Escola Formação Ensino Médio">
+					</div>
+				</div>	<!-- ESCOLA ENSINO MEDIO -->
+
+				<div class="field">
+					<label class="titulo-medio">Senha</label>
+					<div class="ui large icon input">
+						<input 
+							type="password" 
+							name="UserPassword"
+							id="UserPassword" 
+						placeholder="Senha">
+					</div>
+				</div>	<!-- SENHA -->
+
+				<div class="field">
+					<label class="titulo-medio">Confirmação Senha</label>
+					<div class="ui large icon input">
+						<input 
+							type="password" 
+							name="ReUserPassword"
+							id="ReUserPassword" 
+						placeholder="Confirmação Senha">
+					</div>
+				</div>	<!-- CONFIRMACAO SENHA -->
+
+				<a 
+					class="ui big purple button" 
+					onclick="validaForm();">
+					Enviar
+				</a>
+
+				<input 
+					type="hidden" 
+					name="RequestFromAjax" 
+					id="RequestFromAjax" 
+				value="false">
+
+				<input 
+					type="hidden" 
+					name="CurrentView" 
+					id="CurrentView" 
+				value="RegisterView">
+
+				<input 
+					type="hidden" 
+					name="NewRegisterForm" 
+					id="NewRegisterForm" 
+				value="false">
+			</form>
+		</div>
+	</div>
+</div>
+<script src="/dist/js/jquery-3.4.1.min.js"></script>
+<script src="/dist/js/jquery.mask.js"></script>
+<script src="/dist/js/md5.min.js"></script>
+<script src="/dist/semantic/semantic.min.js"></script>
+<script src="/dist/semantic/calendar.min.js"></script>
+<script src="/dist/js/views/registroView.js"></script>

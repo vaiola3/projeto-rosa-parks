@@ -1,0 +1,43 @@
+<div class="ui container" style="padding-top: 33vh">
+	<div class="ui four column middle center aligned grid">
+		<div class="eleven wide mobile eight wide tablet four wide computer column">
+			<form class="ui form" id="FormView" name="FormView" method="POST">
+				<div class="field">
+					<div class="ui large icon input">
+						<input 
+							type="text" 
+							name="EmailUsuario" 
+							id="EmailUsuario"
+						placeholder="Email">
+					</div>
+				</div>
+				<div class="field">
+					<div class="ui large icon input">
+						<input 
+							type="password" 
+							name="SenhaUsuario" 
+							id="SenhaUsuario"
+						placeholder="Senha">
+					</div>
+				</div>
+				<div class="field">
+					<a 
+						class="ui large purple button"
+						id="btnNovoUsuario">
+						Novo
+					</a>
+					<button 
+						class="ui large violet button" 
+					type="submit">
+						Entrar
+					</button>
+				</div>
+				<input type="hidden" name="getNewRegister" id="getNewRegister" value="false">
+			</form>
+		</div>
+	</div>
+</div>
+<script src="/dist/js/jquery-3.4.1.min.js"></script>
+<script src="/dist/js/md5.min.js"></script>
+<script src="/dist/semantic/semantic.min.js"></script>
+<script src="/dist/js/views/loginView.js"></script>

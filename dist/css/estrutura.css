@@ -1,0 +1,62 @@
+.item-fixo {
+    position: absolute;
+}
+
+.superior-esquerdo {
+    top: 1vh;
+    left: 0vh !important;
+}
+
+.superior-direito {
+    top: 5%;
+    right: 5% !important;
+}
+
+.hide {
+    display: none;
+}
+
+.titulo-medio {
+    font-size: 125% !important;
+    color: purple !important;
+    text-align: left;
+}
+
+.in-line {
+    line-height: 2.429em !important;
+}
+
+.em-aula {
+    background-color: #c5df87 !important;
+    color: #212121 !important;
+}
+
+.caixa-alta { 
+    text-transform: uppercase;
+}
+
+.caixa-baixa { 
+    text-transform: lowercase;
+}
+
+.item-vermelho { 
+    color: red !important;
+}
+
+.item-laranja { 
+    color: #ff6c00 !important;
+}
+
+.width35mm {
+    width: 3.5cm;
+}
+
+.scroll {   /*classe com qualquer nome*/
+    overflow:auto !important;
+}
+
+/*th, td { white-space: nowrap; }*/
+div.dataTables_wrapper {
+    width: 100%;
+    margin: 0 auto;
+}

@@ -1,19 +1,36 @@
 <?php
 
-    require('app/core/core.php');
-    require('app/controller/HomeController.php');
-    require('app/controller/RegisterController.php');
-    require('app/controller/ErrorController.php');
+    error_reporting(E_ALL);
 
-    $template = file_get_contents('app/template/estrutura.html');
+    require_once("app/views/View.php");
+    require_once("app/views/RegistroView.php");
 
-    ob_start(); //  begin
-        $core = new Core;
-        $core->start( $_GET );
+    require_once("app/system/Conexao.php");
 
-        $saida = ob_get_contents();
-    ob_clean(); //  end
+    require_once("app/models/Model.php");
+    require_once("app/models/RegistroModel.php");
 
-    $readyTemplate = str_replace( '{{CONTENT}}', $saida, $template );
+    require_once("app/controllers/LoginController.php");
+    require_once("app/controllers/RegistroController.php");
 
-    echo $readyTemplate;
+    require_once("app/core/Core.php");
+
+    session_start();
+    // $_SESSION = [];
+
+    $htmEstrutura = file_get_contents("app/template/estrutura.html");
+
+    ob_start();
+
+    $objCore = new Core($htmEstrutura);
+    $objCore->start();
+
+    $htmCorpo = ob_get_contents();
+
+    ob_end_clean();
+
+    $htmEstrutura = str_replace("{{CONTENT}}", $htmCorpo, $htmEstrutura);
+
+    echo $htmEstrutura;
+
+ ?>
