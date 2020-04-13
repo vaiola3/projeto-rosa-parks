@@ -1,23 +1,37 @@
 <?php 
 	class RegistroModel extends Model {
+
+		public function validaEnderecoEmail($email) {
+			$conexao = $this->getConexao();
+			$emailValidado = $conexao->escape_string($email);
+			$query = "SELECT id FROM cadastros_usuarios WHERE (email = '{$emailValidado}')";
+
+			$retorno = $conexao->query($query);
+			$existeRegistro = false;
+
+			if(isset($retorno) && ($retorno->num_rows > 0))
+				$existeRegistro = true;
+			
+			return $existeRegistro; 
+		}
+
+		public function buscarPor($tipoRegistro) {
+			$resultado = $this->consultarTiposCadastrosPorNome($tipoRegistro);
+			$row = $resultado->fetch_assoc();
+			$registros = $this->consultarCadastrosGeraisPorTipo($row['id']);
+			return $registros;
+		}
+
 		public function consultarEtniasCadastradas() {
-			$resultado = $this->consultarTiposCadastrosPorNome('etnia');
-
-			foreach ($resultado as $key => $value) {
-				$etnias = $this->consultarCadastrosGeraisPorTipo($value['id']);
-			}
-
-			return $etnias;
+			return $this->buscarPor('etnia');
 		}
 
 		public function consultarGenerosCadastrados() {
-			$resultado = $this->consultarTiposCadastrosPorNome('genero');
+			return $this->buscarPor('genero');
+		}
 
-			foreach ($resultado as $key => $value) {
-				$generos = $this->consultarCadastrosGeraisPorTipo($value['id']);
-			}
-
-			return $generos;
+		public function consultarEscolaridadesCadastradas() {
+			return $this->buscarPor('escolaridade');
 		}
 
 		private function consultarCadastrosGeraisPorTipo($idTipo) {

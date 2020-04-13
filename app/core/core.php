@@ -1,24 +1,28 @@
 <?php 
 
 	class Core {
-		private $statusLogin;
 		private $proxController;
 		private $templateEstrutura;
 
-		public function __construct($estrutura) {
-			$this->setTemplateEstrutura($estrutura);
-			$this->setStatusLogin(isset($_SESSION["id_tipo_usuario"]));
+		public function trataRequisicao() {
+			if(isset($_GET['CurrentView'])){
+				$currentView = $_GET['CurrentView'];
+
+				if($currentView == 'RegisterView')
+					(new RegistroController)->tratarAjax();
+			}
 		}
 
-		public function start() {
+		public function carregarConteudo($estrutura) {
+			$this->setTemplateEstrutura($estrutura);
 
-			$usuarioLogado = $this->getStatusLogin();
+			$usuarioLogado = isset($_SESSION["id_tipo_usuario"]);
 
 			if($usuarioLogado){
 				echo "usuario logado";
 			} else {
-				(new RegistroController)->start();
-				// (new LoginController)->start();
+				// (new RegistroController)->start();
+				(new LoginController)->carregarTela();
 			}
 		}
 
@@ -38,14 +42,6 @@
 
 		private function setProxController($controller) {
 			$this->proxController = $controller;
-		}
-
-		private function getStatusLogin() {
-			return $this->statusLogin;
-		}
-
-		private function setStatusLogin($status) {
-			$this->statusLogin = $status;
 		}
 	}
 

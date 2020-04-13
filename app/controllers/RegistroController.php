@@ -1,24 +1,32 @@
 <?php 
 
-	class RegistroController {
-		private $view;
-		private $model;
-
-		public function start() {
-			$this->carregarRegistroModel();
-			$this->carregarRegistroView();
-			$this->imprimirTela();
-		}
-
-		public function carregarRegistroView() {
+	class RegistroController extends Controller {
+		public function __construct() {
+			$this->setModel(new RegistroModel);
 			$this->setView(new RegistroView);
 		}
 
-		public function carregarRegistroModel() {
-			$this->setModel(new RegistroModel);
+		public function verificaNecessidadeValidarFormulario() {
+			////	
 		}
 
-		public function imprimirTela() {
+		public function tratarAjax() {
+			$model = $this->getModel();
+
+			if(isset($_GET['Method'])){
+				$solicitacao = $_GET['Method'];
+
+				if($solicitacao == 'CheckThisEmail'){
+					if(isset($_GET['EmailAdress'])){
+						$email = $_GET['EmailAdress'];
+						$model->validaEnderecoEmail($email);
+					}
+				}
+				
+			}
+		}
+
+		public function carregarTela() {
 			$view = $this->getView();
 			$model = $this->getModel();
 
@@ -29,43 +37,12 @@
 			$view->carregarSelectEtnias($etnias);
 
 			$generos = $model->consultarGenerosCadastrados();
-			$view->carregarSelectGenero($generos);
+			$view->carregarSelectGeneros($generos);
+
+			$escolaridades = $model->consultarEscolaridadesCadastradas();
+			$view->carregarSelectEscolaridades($escolaridades);
 
             $view->imprimirHtml();
-		}
-
-		#	getters / setters
-
-		private function getView() {
-			return $this->view;
-		}
-
-		private function setView($novaView) {
-			$this->view = $novaView;
-		}
-
-		private function getCorpoTemplateSair() {
-			return $this->corpoTemplateSair;
-		}
-
-		private function setCorpoTemplateSair($arquivo) {
-			$this->corpoTemplateSair = $arquivo;
-		}
-
-		private function getCorpoRegisterView() {
-			return $this->corpoRegisterView;
-		}
-
-		private function setCorpoRegisterView($arquivo) {
-			$this->corpoRegisterView = $arquivo;
-		}
-
-		private function getModel() {
-			return $this->model;
-		}
-
-		private function setModel($model) {
-			$this->model = $model;
 		}
 	}
 

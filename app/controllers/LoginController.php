@@ -1,11 +1,11 @@
 <?php 
 
-	class LoginController {
+	class LoginController extends Controller {
 		private $corpoLoginView = "app/views/loginView.html";
-		private $solicitacaoRegistro;
 
 		public function __construct() {
-			$this->verificaSolicitacaoRegistro();
+			// $this->setModel(new LoginModel);
+			$this->setView(new LoginView);
 		}
 
 		public function verificaSolicitacaoRegistro() {
@@ -16,41 +16,26 @@
                 FILTER_FLAG_NO_ENCODE_QUOTES
             );
 
-            $this->setSolicitacaoRegistro($parametro == "true");
+            return ($parametro == "true");
 		}
 
 		public function start() {
-			$novaSolicitacaoRegistro = $this->getSolicitacaoRegistro();
-
-			if($novaSolicitacaoRegistro){
+			$novoRegistro = $this->verificaSolicitacaoRegistro();
+			if($novoRegistro){
 				(new RegistroController)->start();
 			} else {
-				$this->carregaTelaLogin();
+				$this->imprimirTela();
 			}
 		}
 
-		public function carregaTelaLogin() {
-			$conteudo = file_get_contents($this->getCorpoLoginView());
-			echo $conteudo;
+		public function imprimirTela() {
+			$view = $this->getView();
+			$model = $this->getModel();
+
+            $view->imprimirHtml();
 		}
 
 		#	getters / setters
-
-		private function getSolicitacaoRegistro() {
-			return $this->solicitacaoRegistro;
-		}
-
-		private function setSolicitacaoRegistro($status) {
-			$this->solicitacaoRegistro = $status;
-		}
-
-		private function getCorpoLoginView() {
-			return $this->corpoLoginView;
-		}
-
-		private function setCorpoLoginView($corpo) {
-			$this->corpoLoginView = $corpo;
-		}
 	}
 
  ?>

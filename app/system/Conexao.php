@@ -2,18 +2,18 @@
 	class Conexao {
 		private static $conexao  = null;
 
-		private static $servidor = 'localhost';
-		private static $nome 	 = 'programacaoferiasverao2020';
-		private static $usuario  = 'root';
-		private static $senha    = '';
-
 		private function __construct(){}
         private function __clone(){}
         private function __wakeup(){}
 
 		public static function getConexao(){
-			if(!isset(self::$conexao)){				
-				self::$conexao = new mysqli(self::$servidor, self::$usuario, self::$senha, self::$nome);
+			if(!isset(self::$conexao)){
+				$servidor = env('DB_HOST');
+				$usuario  = env('DB_USERNAME');
+				$senha    = env('DB_PASSWORD');
+				$nome 	  = env('DB_NAME');
+
+				self::$conexao = new mysqli($servidor, $usuario, $senha, $nome);
 
 				self::$conexao->set_charset("utf8");
 

@@ -1,25 +1,30 @@
-function checkEmailAdress( input ){
-	formatToLowerCase( input );
-	var sAdress = $( input ).val().trim();
-	var sAdressParam = ("&EmailAdress=" + sAdress);
-	var sMethodParam = "&Method=CheckThisEmail";
-	var sHost = "{{MNEMONICO_URL_HOST}}";
-	if ( sAdress != "" ){
-		var url = ("http://" + sHost + "/?RequestFromAjax=true");
-		url = (url + sAdressParam);
-		url = (url + sMethodParam);
+const inputEmail = document.getElementById('EmailAdress');
 
-		console.log( url );
+const validaEnderecoEmail = function () {
+	formatToLowerCase(inputEmail);
+	const enderecoEmail = inputEmail.value;
+	const viewAtual = document.getElementById('CurrentView').value.trim();
 
-		$.get( url, function( data ){
-			var oResponse = JSON.parse( eval( data ) );
-			console.log( ( oResponse ) );
-			if ( !(oResponse.EmailValido) ){
+	const pEmail = '&EmailAdress=' + enderecoEmail;
+	const pMetodo = '&Method=CheckThisEmail';
+	const pView = '&CurrentView=' + viewAtual;
+
+	if(enderecoEmail != ""){
+		const url = 'http://' + host + '/?RequestFromAjax=true' + pEmail + pMetodo + pView;
+
+		$.get(url, function (data) {
+			const retorno = JSON.parse(eval(data));
+
+			console.log(retorno);
+			if (!retorno.valido){
 				window.alert( "Email já cadastrado anteriormente." );
 			}
-		} );
+		});
 	}
+
 }
+
+inputEmail.addEventListener('change', validaEnderecoEmail);
 
 function formatToUpperCase( input ){
 	var sUpperCased = $( input ).val().toUpperCase();
@@ -29,7 +34,7 @@ function formatToUpperCase( input ){
 }
 
 function formatToLowerCase( input ){
-	var sUpperCased = $( input ).val().toLowerCase();
+	var sUpperCased = $( input ).val().toLowerCase().trim();
 	sUpperCased = sUpperCased.replace(/"/g, "");
 	sUpperCased = sUpperCased.replace(/'/g, "");
 	$( input ).val( sUpperCased );
@@ -158,10 +163,10 @@ function getEndereco( sCEP ){
 	var oCidade = $( "#Cidade" );
 
 	$.get( url, function( data ){
-		var oResponse = eval( data );
-		oLograd.val( oResponse.logradouro.toUpperCase() );
-		oBairro.val( oResponse.bairro.toUpperCase() );
-		oCidade.val( oResponse.localidade.toUpperCase() );
+		var retorno = eval( data );
+		oLograd.val( retorno.logradouro.toUpperCase() );
+		oBairro.val( retorno.bairro.toUpperCase() );
+		oCidade.val( retorno.localidade.toUpperCase() );
 	} );
 }
 
@@ -221,4 +226,4 @@ function simulaFormPreenchido(){
 	$( "#TipoUsuario" ).val( 7 );
 	$( "#Disciplinas" ).val( [1, 2, 3 ] );
 	$( "#EscolaEnsinoMedio" ).val( "EMEIEF" );
-}////simulaFormPreenchido();
+}simulaFormPreenchido();
