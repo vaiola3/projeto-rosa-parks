@@ -1,9 +1,10 @@
 const inputEmail = document.getElementById('EmailAdress');
+const inputView = document.getElementById('CurrentView');
 
 const validaEnderecoEmail = function () {
 	formatToLowerCase(inputEmail);
 	const enderecoEmail = inputEmail.value;
-	const viewAtual = document.getElementById('CurrentView').value.trim();
+	const viewAtual = inputView.value.trim();
 
 	const pEmail = '&EmailAdress=' + enderecoEmail;
 	const pMetodo = '&Method=CheckThisEmail';

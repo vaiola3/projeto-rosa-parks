@@ -10,21 +10,29 @@
 			////	
 		}
 
-		public function tratarAjax() {
-			$model = $this->getModel();
-
-			if(isset($_GET['Method'])){
-				$solicitacao = $_GET['Method'];
-
-				if($solicitacao == 'CheckThisEmail'){
-					if(isset($_GET['EmailAdress'])){
-						$email = $_GET['EmailAdress'];
-						$model->validaEnderecoEmail($email);
-					}
-				}
-				
-			}
+		public function iniciar() {
+			$this->carregarTela();
 		}
+
+		////	realizar tratativa por meio de api
+
+		// public function tratarAjax() {
+		// 	$model = $this->getModel();
+
+		// 	if(isset($_GET['Method'])){
+		// 		$solicitacao = $_GET['Method'];
+
+		// 		if($solicitacao == 'CheckThisEmail'){
+		// 			if(isset($_GET['EmailAdress'])){
+		// 				$email = $_GET['EmailAdress'];
+		// 				$model->validaEnderecoEmail($email);
+		// 			}
+		// 		}
+				
+		// 	}
+		// }
+
+		////	realizar tratativa por meio de api final
 
 		public function carregarTela() {
 			$view = $this->getView();

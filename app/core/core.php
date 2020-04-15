@@ -21,8 +21,8 @@
 			if($usuarioLogado){
 				echo "usuario logado";
 			} else {
-				// (new RegistroController)->start();
-				(new LoginController)->carregarTela();
+				(new RegistroController)->iniciar();
+				// (new LoginController)->imprimirTela();
 			}
 		}
 
