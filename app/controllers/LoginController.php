@@ -5,7 +5,7 @@
 
 		public function __construct() {
 			// $this->setModel(new LoginModel);
-			$this->setView(new LoginView);
+			$this->setTwig(Twig::getInstancia());
 		}
 
 		public function verificaSolicitacaoRegistro() {
@@ -22,17 +22,16 @@
 		public function start() {
 			$novoRegistro = $this->verificaSolicitacaoRegistro();
 			if($novoRegistro){
-				(new RegistroController)->start();
+				(new RegistroController)->imprimirTela();
 			} else {
 				$this->imprimirTela();
 			}
 		}
 
 		public function imprimirTela() {
-			$view = $this->getView();
 			$model = $this->getModel();
 
-            $view->imprimirHtml();
+            $this->imprimirConteudo('loginView.html',[]);
 		}
 
 		#	getters / setters

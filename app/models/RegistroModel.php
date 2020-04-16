@@ -22,6 +22,14 @@
 			return $registros;
 		}
 
+		public function consultarTiposUsuarioCadastrados() {
+			$tiposUsuario = array(
+                array('id'   => '7', 'nome' => 'Professor'),
+                array('id'   => '8', 'nome' => 'Aluno')
+            );
+			return $tiposUsuario;
+		}
+
 		public function consultarEtniasCadastradas() {
 			return $this->buscarPor('etnia');
 		}
@@ -32,6 +40,10 @@
 
 		public function consultarEscolaridadesCadastradas() {
 			return $this->buscarPor('escolaridade');
+		}
+
+		public function consultarDisciplinasCadastradas() {
+			return $this->buscarPor('disciplina');
 		}
 
 		private function consultarCadastrosGeraisPorTipo($idTipo) {

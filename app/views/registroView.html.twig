@@ -1,10 +1,11 @@
+{% extends 'estrutura.html' %}
+
+{% block conteudoPagina %}
+
 <link rel="stylesheet" type="text/css" href="dist/semantic/calendar.min.css">
 
 <div class="ui container" style="padding-top: 1vh">
 	<div class="ui one column middle center aligned grid">
-
-		{{MNEMONICO_ICON_VOLTAR}}
-
 		<div class="twelve wide mobile teen wide tablet eight wide computer column">
 			<form class="ui form" id="FormView" name="FormView" method="POST">
 
@@ -16,8 +17,7 @@
 							class="caixa-alta"
 							name="NomeCompleto"
 							id="NomeCompleto" 
-							maxlength="80" 
-							onchange="formatToUpperCase( this );" 
+							maxlength="80"
 						placeholder="Nome Completo">
 					</div>
 				</div>	<!-- NOME COMPLETO -->
@@ -53,9 +53,10 @@
 						class="ui fluid search dropdown" 
 						name="UsuarioEtnia"
 					id="UsuarioEtnia">
-
-						{{MNEMONICO_SELECT_ETNIA}}
-
+						<option value=''>Etnia</option>
+						{% for key, value in etnias %}
+						<option value="{{ value.id }}">{{ value.nome }}</option>
+						{% endfor %}
 					</select>
 				</div>	<!-- SELECT ETNIA -->
 
@@ -65,9 +66,10 @@
 						class="ui fluid search dropdown" 
 						name="UsuarioGenero"
 					id="UsuarioGenero">
-
-						{{MNEMONICO_SELECT_GENERO}}
-
+						<option value=''>Gênero</option>
+						{% for key, value in generos %}
+						<option value="{{ value.id }}">{{ value.nome }}</option>
+						{% endfor %}
 					</select>
 				</div>	<!-- SELECT GENERO -->
 
@@ -88,9 +90,10 @@
 						class="ui fluid search dropdown" 
 						name="UsuarioEscolaridade"
 					id="UsuarioEscolaridade">
-
-						{{MNEMONICO_SELECT_ESCOLARIDADE}}
-
+						<option value=''>Escolaridade</option>
+						{% for key, value in escolaridades %}
+						<option value="{{ value.id }}">{{ value.nome }}</option>
+						{% endfor %}
 					</select>
 				</div>	<!-- SELECT ESCOLARIDADE -->
 
@@ -100,8 +103,7 @@
 						<input 
 							type="text" 
 							name="CEP"
-							id="CEP" 
-							onchange="getEndereco( $( this ).val() );" 
+							id="CEP"
 						placeholder="CEP">
 					</div>
 				</div>	<!-- CEP -->
@@ -113,8 +115,7 @@
 							type="text" 
 							class="caixa-alta"
 							name="Logradouro"
-							id="Logradouro" 
-							onchange="formatToUpperCase( this );" 
+							id="Logradouro"
 						placeholder="Logradouro">
 					</div>
 				</div>	<!-- LOGRADOURO -->
@@ -137,8 +138,7 @@
 							type="text" 
 							class="caixa-alta"
 							name="Complemento"
-							id="Complemento" 
-							onchange="formatToUpperCase( this );"
+							id="Complemento"
 						placeholder="Complemento">
 					</div>
 				</div>	<!-- COMPLEMENTO -->
@@ -150,8 +150,7 @@
 							type="text" 
 							class="caixa-alta"
 							name="Bairro"
-							id="Bairro" 
-							onchange="formatToUpperCase( this );"
+							id="Bairro"
 						placeholder="Bairro">
 					</div>
 				</div>	<!-- BAIRRO -->
@@ -163,8 +162,7 @@
 							type="text" 
 							class="caixa-alta"
 							name="Cidade"
-							id="Cidade" 
-							onchange="formatToUpperCase( this );"
+							id="Cidade"
 						placeholder="Cidade">
 					</div>
 				</div>	<!-- CIDADE -->
@@ -186,11 +184,11 @@
 					<select 
 						class="ui dropdown" 
 						name="TipoUsuario"
-						onchange="checkNewUserType();" 
 					id="TipoUsuario">
-
-						{{MNEMONICO_SELECT_USER_TYPE}}
-
+						<option value=''>Sou...</option>
+						{% for key, value in tiposUsuario %}
+						<option value="{{ value.id }}">{{ value.nome }}</option>
+						{% endfor %}
 					</select>
 				</div>	<!-- TIPO USUARIO -->
 
@@ -201,9 +199,9 @@
 						name="Disciplinas[]"
 						id="Disciplinas" 
 					multiple="">
-
-						{{MNEMONICO_SELECT_DISCIPLINA}}
-
+						{% for key, value in disciplinas %}
+						<option value="{{ value.id }}">{{ value.nome }}</option>
+						{% endfor %}
 					</select>
 				</div>	<!-- DISCIPLINAS -->
 
@@ -244,7 +242,7 @@
 
 				<a 
 					class="ui big purple button" 
-					onclick="validaForm();">
+					id="botaoEnviar">
 					Enviar
 				</a>
 
@@ -265,12 +263,14 @@
 					name="NewRegisterForm" 
 					id="NewRegisterForm" 
 				value="false">
+
+				{% block inputLogout %}{{ parent() }}{% endblock %}
 			</form>
 		</div>
 	</div>
 </div>
 <script>
-	const host = "{{MNEMONICO_URL_HOST}}";
+	const host = "{{urlHost}}";
 </script>
 <script src="/dist/js/jquery-3.4.1.min.js"></script>
 <script src="/dist/js/jquery.mask.js"></script>
@@ -278,3 +278,4 @@
 <script src="/dist/semantic/semantic.min.js"></script>
 <script src="/dist/semantic/calendar.min.js"></script>
 <script src="/dist/js/views/registroView.js"></script>
+{% endblock %}

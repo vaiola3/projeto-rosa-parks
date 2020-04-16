@@ -3,54 +3,35 @@
 	class RegistroController extends Controller {
 		public function __construct() {
 			$this->setModel(new RegistroModel);
-			$this->setView(new RegistroView);
+			$this->setTwig(Twig::getInstancia());
 		}
 
 		public function verificaNecessidadeValidarFormulario() {
 			////	
 		}
 
-		public function iniciar() {
-			$this->carregarTela();
-		}
-
-		////	realizar tratativa por meio de api
-
-		// public function tratarAjax() {
-		// 	$model = $this->getModel();
-
-		// 	if(isset($_GET['Method'])){
-		// 		$solicitacao = $_GET['Method'];
-
-		// 		if($solicitacao == 'CheckThisEmail'){
-		// 			if(isset($_GET['EmailAdress'])){
-		// 				$email = $_GET['EmailAdress'];
-		// 				$model->validaEnderecoEmail($email);
-		// 			}
-		// 		}
-				
-		// 	}
-		// }
-
-		////	realizar tratativa por meio de api final
-
-		public function carregarTela() {
-			$view = $this->getView();
+		public function imprimirTela() {
 			$model = $this->getModel();
 
-			$view->carregarBotaoSair();
-			$view->carregarOpcoesTipoUsuario();
-
-			$etnias = $model->consultarEtniasCadastradas();
-			$view->carregarSelectEtnias($etnias);
-
-			$generos = $model->consultarGenerosCadastrados();
-			$view->carregarSelectGeneros($generos);
-
+			$urlHost 	   = env('APP_HOST');
+			$etnias 	   = $model->consultarEtniasCadastradas();
+			$generos 	   = $model->consultarGenerosCadastrados();
 			$escolaridades = $model->consultarEscolaridadesCadastradas();
-			$view->carregarSelectEscolaridades($escolaridades);
+			$tiposUsuario  = $model->consultarTiposUsuarioCadastrados();
+			$disciplinas   = $model->consultarDisciplinasCadastradas();
 
-            $view->imprimirHtml();
+			$args = [
+				'urlHost'        => $urlHost,
+				'etnias' 		 => $etnias,
+				'generos' 		 => $generos,
+				'escolaridades'  => $escolaridades,
+				'tiposUsuario'   => $tiposUsuario,
+				'disciplinas'    => $disciplinas,
+				'iconeLogout' 	 => 'in',
+				'mensagemLogout' => 'Logar'
+			];
+
+			$this->imprimirConteudo('registroView.html', $args);
 		}
 	}
 

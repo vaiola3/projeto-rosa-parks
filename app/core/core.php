@@ -4,25 +4,15 @@
 		private $proxController;
 		private $templateEstrutura;
 
-		public function trataRequisicao() {
-			if(isset($_GET['CurrentView'])){
-				$currentView = $_GET['CurrentView'];
-
-				if($currentView == 'RegisterView')
-					(new RegistroController)->tratarAjax();
-			}
-		}
-
-		public function carregarConteudo($estrutura) {
-			$this->setTemplateEstrutura($estrutura);
+		public function carregarConteudo() {
 
 			$usuarioLogado = isset($_SESSION["id_tipo_usuario"]);
 
 			if($usuarioLogado){
 				echo "usuario logado";
 			} else {
-				(new RegistroController)->iniciar();
-				// (new LoginController)->imprimirTela();
+				// (new RegistroController)->imprimirTela();
+				(new LoginController)->start();
 			}
 		}
 

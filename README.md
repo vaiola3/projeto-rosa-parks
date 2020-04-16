@@ -12,11 +12,12 @@ Tendo esses registros outras informações obtidas durante o período letivo pod
 
 #   HOW
 
-- PHP (7.2) ;
-- JavaScript (ES6) ;
+- PHP (7.2)
+    - Twig (^2.0) ;
+- JavaScript (ES6)
     - Jquery ;
-    - DataTables ;
-- HTML (5) ; 
-- CSS (3) ;
+- HTML (5)
+- CSS (3)
 - Outros 
-    - SemanticUI ;
+    - SemanticUI (2.4.1) ;
+    - DataTables (1.10.20) ;

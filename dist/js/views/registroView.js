@@ -1,7 +1,19 @@
-const inputEmail = document.getElementById('EmailAdress');
-const inputView = document.getElementById('CurrentView');
+const inputEmail 		= document.getElementById('EmailAdress');
+const inputView  		= document.getElementById('CurrentView');
+const inputNome  		= document.getElementById('NomeCompleto');
+const inputCep   		= document.getElementById('CEP');
+const inputLogradouro 	= document.getElementById('Logradouro');
+const inputComplemento 	= document.getElementById('Complemento');
+const inputBairro 		= document.getElementById('Bairro');
+const inputCidade 		= document.getElementById('Cidade');
+const inputEscolaMedio  = document.getElementById('InputEscEnsinoMedio');
 
-const validaEnderecoEmail = function () {
+const selectTipoUsuario = document.getElementById('TipoUsuario');
+const selectDisicplinas = document.getElementById('SelectDisciplina');
+
+const botaoEnviar 		= document.getElementById('botaoEnviar');
+
+const validarEnderecoEmail = function () {
 	formatToLowerCase(inputEmail);
 	const enderecoEmail = inputEmail.value;
 	const viewAtual = inputView.value.trim();
@@ -23,23 +35,69 @@ const validaEnderecoEmail = function () {
 		});
 	}
 
+};
+
+const validarNomeCompleto = function () {
+	inputNome.value = valueParaCaixaAlta(inputNome);
+};
+
+const validarCep = function () {
+	const numeroCep = inputCep.value;
+	consultaCep(numeroCep);
+};
+
+const validarLogradouro = function () {
+	inputLogradouro.value = valueParaCaixaAlta(inputLogradouro);
+};
+
+const validarComplemento = function () {
+	inputComplemento.value = valueParaCaixaAlta(inputComplemento);
+};
+
+const validarBairro = function () {
+	inputBairro.value = valueParaCaixaAlta(inputBairro);
+};
+
+const validarCidade = function () {
+	inputCidade.value = valueParaCaixaAlta(inputCidade);
+};
+
+const validarTipoUsuario = function () {
+	const tipoUsuario = selectTipoUsuario.value;
+	if(tipoUsuario == 7){
+		$(selectDisicplinas).removeClass('hide');
+		$(inputEscolaMedio).addClass('hide');
+	} else {
+		$(selectDisicplinas).addClass('hide');
+		$(inputEscolaMedio).removeClass('hide');
+	}
+};
+
+inputNome.addEventListener('change', validarNomeCompleto);
+inputCep.addEventListener('change', validarCep);
+inputLogradouro.addEventListener('change', validarLogradouro);
+inputComplemento.addEventListener('change', validarComplemento);
+inputBairro.addEventListener('change', validarBairro);
+inputCidade.addEventListener('change', validarCidade);
+inputEmail.addEventListener('change', validarEnderecoEmail);
+
+botaoEnviar.addEventListener('click', validarFormulario);
+
+selectTipoUsuario.addEventListener('change', validarTipoUsuario);
+
+const valueParaCaixaAlta = function (input) {
+	let textoCaixaAlta = input.value.toUpperCase().trim();
+	textoCaixaAlta = textoCaixaAlta.replace(/"/g, "");
+	textoCaixaAlta = textoCaixaAlta.replace(/'/g, "");
+	return textoCaixaAlta;
 }
 
-inputEmail.addEventListener('change', validaEnderecoEmail);
-
-function formatToUpperCase( input ){
-	var sUpperCased = $( input ).val().toUpperCase();
-	sUpperCased = sUpperCased.replace(/"/g, "");
-	sUpperCased = sUpperCased.replace(/'/g, "");
-	$( input ).val( sUpperCased );
-}
-
-function formatToLowerCase( input ){
-	var sUpperCased = $( input ).val().toLowerCase().trim();
-	sUpperCased = sUpperCased.replace(/"/g, "");
-	sUpperCased = sUpperCased.replace(/'/g, "");
-	$( input ).val( sUpperCased );
-}
+const valueParaCaixaBaixa = function (input) {
+	let textoCaixaBaixa = input.value.toLowerCase().trim();
+	textoCaixaBaixa = textoCaixaBaixa.replace(/"/g, "");
+	textoCaixaBaixa = textoCaixaBaixa.replace(/'/g, "");
+	return textoCaixaBaixa;
+};
 
 function appendMessageInputVazio( sNomeCampo, sMensagemErro ){
 	if ( (sMensagemErro == "") )
@@ -60,7 +118,7 @@ function formatDate( sDate ) {
     return [year, month, day].join('-');
 }
 
-function validaForm(){
+function validarFormulario(){
 
 	var sNomeCompleto 	= $( "#NomeCompleto" ).val().trim();
 	var sCPF 			= $( "#CPF" ).val();
@@ -156,33 +214,14 @@ function validaForm(){
 	}
 }
 
-function getEndereco( sCEP ){
-	var url = ("https://viacep.com.br/ws/"  + sCEP +  "/json/");
-
-	var oLograd = $( "#Logradouro" );
-	var oBairro = $( "#Bairro" );
-	var oCidade = $( "#Cidade" );
-
-	$.get( url, function( data ){
-		var retorno = eval( data );
-		oLograd.val( retorno.logradouro.toUpperCase() );
-		oBairro.val( retorno.bairro.toUpperCase() );
-		oCidade.val( retorno.localidade.toUpperCase() );
-	} );
-}
-
-function checkNewUserType(){
-	var sCurrentUserType 	 = $("#TipoUsuario").val();
-	var oSelectDisciplinas 	 = $( "#SelectDisciplina" );
-	var oInputEscEnsinoMedio = $( "#InputEscEnsinoMedio" );
-
-	if( sCurrentUserType == "7" ){
-		oSelectDisciplinas.removeClass( "hide" );
-		oInputEscEnsinoMedio.addClass( "hide" );
-	}else{
-		oSelectDisciplinas.addClass( "hide" );
-		oInputEscEnsinoMedio.removeClass( "hide" );
-	}
+function consultaCep(numeroCep){
+	const url = 'https://viacep.com.br/ws/' + numeroCep + '/json/';
+	$.get(url, function (data) {
+		const retorno = eval(data);
+		inputLogradouro.value = retorno.logradouro.toUpperCase();
+		inputBairro.value = retorno.bairro.toUpperCase();
+		inputCidade.value = retorno.localidade.toUpperCase();
+	});
 }
 
 $( "#Numero" ).mask( "99999999" );
@@ -227,4 +266,4 @@ function simulaFormPreenchido(){
 	$( "#TipoUsuario" ).val( 7 );
 	$( "#Disciplinas" ).val( [1, 2, 3 ] );
 	$( "#EscolaEnsinoMedio" ).val( "EMEIEF" );
-}simulaFormPreenchido();
+}////simulaFormPreenchido();

@@ -1,22 +1,32 @@
 <?php
     class Controller {
-        private $view;
 		private $model;
+		private $twig;
 		
 		public function __contruct($model, $view) {
 			$this->setModel($model);
-			$this->setView($view);
+		}
+
+		public function imprimirConteudo($nomeArquivo, $args) {
+			$template = $this->getTemplate($nomeArquivo);
+			echo $template->render($args);
+		}
+
+		public function getTemplate($nomeArquivo) {
+			$twig = $this->getTwig();
+			$template = $twig->load($nomeArquivo);
+			return $template;
 		}
         
-        #	getters / setters
-
-		protected function getView() {
-			return $this->view;
+		#	getters / setters
+		
+		protected function getTwig() {
+			return $this->twig;
 		}
 
-		protected function setView($novaView) {
-			$this->view = $novaView;
-        }
+		protected function setTwig($twig) {
+			$this->twig = $twig;
+		}
         
         protected function getModel() {
 			return $this->model;

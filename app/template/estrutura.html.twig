@@ -15,10 +15,24 @@
     <body>
 
         <figure class="item-fixo superior-esquerdo">
-            <!-- <img src="/img/uneafro_peq.png"> -->
+            <img src="/img/uneafro_peq.png">
         </figure>
 
-        {{CONTENT}}
+        {% block botaoLogout %}
+        <div class="item-fixo superior-direito">
+            <a class="ui purple big label" id="botaoSair">
+                <i class="sign {{iconeLogout}} alternate pink icon"></i>
+                {{mensagemLogout}}
+            </a>
+        </div>
+        {% endblock %}
+
+        {% block conteudoPagina %}
+        {% endblock %}
+
+        {% block inputLogout %}
+        <input type="hidden" id="LogOutSession" name="LogOutSession" value="false">
+        {% endblock %}
 
     </body>
     <script src="/dist/js/template/estrutura.js"></script>
