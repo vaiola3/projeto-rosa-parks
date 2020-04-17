@@ -22,6 +22,22 @@
 			}
 		}
 
+		protected function consultarCadastrosGeraisPorTipo($idTipo) {
+			$conexao = $this->abrirConexao();
+
+			$query = "SELECT id, nome FROM cadastros_gerais WHERE (id_tipo = '{$idTipo}');";
+
+			return $this->executarQuery($query);
+		}
+
+		protected function consultarTiposCadastrosPorNome($nome) {
+			$conexao = $this->abrirConexao();
+
+			$query = "SELECT nome, id FROM tipos_cadastros WHERE (nome = '{$nome}')";
+
+			return $this->executarQuery($query);
+		}
+
 		#	getters / setters
 
 		protected function getConexao() {

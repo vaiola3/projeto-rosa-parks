@@ -11,7 +11,6 @@
         	if(!isset(self::$twig)){
         		$loader = new \Twig\Loader\FilesystemLoader([
 			        'app/template',
-			        'app/template/logout',
 			        'app/views/'
 			    ]);
 

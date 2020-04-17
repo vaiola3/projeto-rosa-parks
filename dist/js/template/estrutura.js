@@ -1,13 +1,14 @@
-const botaoSair          = document.getElementById('botaoSair');
-const inputLogoutSession = document.getElementById('LogOutSession');
-const formView           = document.getElementById('FormView');
+const botaoSair   = document.getElementById('botaoSair');
+const inputLogout = document.getElementById('LogOutSession');
+const formView    = document.getElementById('FormView');
 
 const logOut = function () {
-    inputLogoutSession.value = 'true';
+    inputLogout.value = 'true';
     $(formView).submit();
 };
 
-botaoSair.addEventListener('click', logOut);
+if(botaoSair)
+    botaoSair.addEventListener('click', logOut);
 
 $('.ui.dropdown').dropdown();
 $('.tabular.menu .item').tab();

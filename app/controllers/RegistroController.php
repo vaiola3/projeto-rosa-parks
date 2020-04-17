@@ -13,16 +13,16 @@
 		public function imprimirTela() {
 			$model = $this->getModel();
 
-			$urlHost 	   = env('APP_HOST');
-			$etnias 	   = $model->consultarEtniasCadastradas();
-			$generos 	   = $model->consultarGenerosCadastrados();
+			$urlHost       = env('APP_HOST');
+			$etnias        = $model->consultarEtniasCadastradas();
+			$generos       = $model->consultarGenerosCadastrados();
 			$escolaridades = $model->consultarEscolaridadesCadastradas();
 			$tiposUsuario  = $model->consultarTiposUsuarioCadastrados();
 			$disciplinas   = $model->consultarDisciplinasCadastradas();
 
 			$args = [
 				'urlHost'        => $urlHost,
-				'etnias' 		 => $etnias,
+				'etnias'         => $etnias,
 				'generos' 		 => $generos,
 				'escolaridades'  => $escolaridades,
 				'tiposUsuario'   => $tiposUsuario,
@@ -31,7 +31,7 @@
 				'mensagemLogout' => 'Logar'
 			];
 
-			$this->imprimirConteudo('registroView.html', $args);
+			$this->imprimirConteudo('registroView.html.twig', $args);
 		}
 	}
 

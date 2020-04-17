@@ -12,4 +12,4 @@ function criarNovoRegistro(){
 function loginWithUserTest(){
 	$('#EmailUsuario').val('email@email.com');
 	$('#SenhaUsuario').val('123');
-}	////	loginWithUserTest();
+}	////loginWithUserTest();

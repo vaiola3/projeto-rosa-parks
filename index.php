@@ -11,11 +11,16 @@
     require_once("app/config/Conexao.php");
 
     require_once("app/models/Model.php");
+    require_once("app/models/LoginModel.php");
     require_once("app/models/RegistroModel.php");
+    require_once("app/models/AlunoModel.php");
+    require_once("app/models/AdminModel.php");
 
     require_once("app/controllers/Controller.php");
     require_once("app/controllers/LoginController.php");
     require_once("app/controllers/RegistroController.php");
+    require_once("app/controllers/AlunoController.php");
+    require_once("app/controllers/AdminController.php");
 
     require_once("app/core/Core.php");
 

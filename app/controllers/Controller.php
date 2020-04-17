@@ -12,7 +12,18 @@
 			echo $template->render($args);
 		}
 
-		public function getTemplate($nomeArquivo) {
+		protected function obtenhaParametro($parametro) {
+			$resultado = filter_input( 
+                INPUT_POST, 
+                $parametro, 
+                FILTER_SANITIZE_STRING,
+                FILTER_FLAG_NO_ENCODE_QUOTES
+			);
+
+			return $resultado;
+		}
+
+		protected function getTemplate($nomeArquivo) {
 			$twig = $this->getTwig();
 			$template = $twig->load($nomeArquivo);
 			return $template;

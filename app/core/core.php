@@ -12,7 +12,9 @@
 				echo "usuario logado";
 			} else {
 				// (new RegistroController)->imprimirTela();
-				(new LoginController)->start();
+				// (new LoginController)->start();
+				// (new AlunoController)->start();
+				(new AdminController)->start();
 			}
 		}
 
