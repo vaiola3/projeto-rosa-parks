@@ -11,10 +11,10 @@
 			if($usuarioLogado){
 				echo "usuario logado";
 			} else {
-				// (new RegistroController)->imprimirTela();
+				(new RegistroController)->start();
 				// (new LoginController)->start();
 				// (new AlunoController)->start();
-				(new AdminController)->start();
+				// (new AdminController)->start();
 			}
 		}
 

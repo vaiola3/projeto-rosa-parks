@@ -1,15 +1,101 @@
 {% extends 'estrutura.html.twig' %}
 {% block conteudoPagina %}
-<div style="height: 30%;"></div>
 <div class="ui container">
-	<div class="ui four column middle center aligned grid">
-		<div class="eleven wide mobile eight wide tablet four wide computer column">
-			<h1>view admin</h1>
+	<div class="ui grid">
+
+		<div class="row">
+			<div class="sixteen wide mobile sixteen wide tablet sixteen wide computer column">
+				<h1>Olá, {{ NOME_USUARIO }}</h1>
+			</div>
 		</div>
+
+		<div class="row">
+			<div class="sixteen wide mobile sixteen wide tablet sixteen wide computer column">
+
+				<div class="ui segment">
+					<div class="ui top attached tabular menu">
+						<a 
+							class="item active"
+							id="UsuariosSemAcessoTittle">
+							Usuários Sem Acesso
+						</a>
+						<a 
+							class="item"
+							id="UsuariosAtivosTittle">
+							Usuários Ativos
+						</a>
+						<!-- <a 
+							class="item"
+							id="AulasDadasTittle">
+							Aulas Dadas
+						</a> -->
+						<!-- <a 
+							class="item"
+							id="AulasAssistidasTittle">
+							Aulas Assistidas
+						</a> -->
+						<!-- <a 
+							class="item"
+							id="OpcoesRegistroTittle">
+							Opções de Registro
+						</a> -->
+					</div>
+					
+					<div 
+						id="UsuariosSemAcesso" 
+						class="ui bottom attached segment hide scroll">
+						{% for key, value in USUARIOS_SEM_ACESSO %}
+						<h1>{{value}}</h1>
+						{% endfor %}
+					</div>
+
+					<div 
+						id="UsuariosAtivos" 
+						class="ui bottom attached segment hide scroll">
+						{% for key, value in USUARIOS_ATIVOS %}
+						<h1>{{value}}</h1>
+						{% endfor %}
+					</div>
+
+					<div 
+						id="AulasDadas" 
+						class="ui bottom attached segment hide">
+						{% for key, value in AULAS_DADAS %}
+						<h1>{{value}}</h1>
+						{% endfor %}
+					</div>
+
+					<div 
+						id="AulasAssistidas" 
+						class="ui bottom attached segment hide">
+						{% for key, value in AULAS_ASSISTIDAS %}
+						<h1>{{value}}</h1>
+						{% endfor %}
+					</div>
+
+					<div 
+						id="OpcoesRegistro" 
+						class="ui bottom attached segment hide">
+						{% for key, value in OPCOES_REGISTRO %}
+						<h1>{{value}}</h1>
+						{% endfor %}
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
 	</div>
+
+	<form id="FormView" name="FormView" class="ui form" method="POST">
+
+		{% block inputLogout %}{{ parent() }}{% endblock %}
+				
+	</form>
+
 </div>
 <script src="/dist/js/jquery-3.4.1.min.js"></script>
 <script src="/dist/js/md5.min.js"></script>
 <script src="/dist/semantic/semantic.min.js"></script>
-<script src="/dist/js/views/loginView.js"></script>
+<script src="/dist/js/views/adminView.js"></script>
 {% endblock %}

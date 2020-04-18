@@ -1,2 +1,5 @@
 #   diretorio vendor
-vendor/
+vendor/*
+
+#   arquivo env
+app/config/env.php

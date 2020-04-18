@@ -1,5 +1,7 @@
 {
     "require": {
-        "twig/twig": "^2.0"
+        "twig/twig": "^2.0",
+        "slim/slim": "3.*",
+        "tuupola/slim-basic-auth": "^3.2"
     }
 }

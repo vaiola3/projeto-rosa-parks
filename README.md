@@ -13,9 +13,11 @@ Tendo esses registros outras informações obtidas durante o período letivo pod
 #   HOW
 
 - PHP (7.2)
-    - Twig (^2.0) ;
+    - Slim (3.12.3) ;
+    - Twig (2.12.5) ;
+    - tuupola/slim-basic-auth (3.2.1) ;
 - JavaScript (ES6)
-    - Jquery ;
+    - Jquery (3.4.1) ;
 - HTML (5)
 - CSS (3)
 - Outros 
