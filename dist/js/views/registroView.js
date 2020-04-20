@@ -1,36 +1,51 @@
-const inputEmail 		= document.getElementById('EmailAdress');
-const inputView  		= document.getElementById('CurrentView');
-const inputNome  		= document.getElementById('NomeCompleto');
-const inputCep   		= document.getElementById('CEP');
-const inputLogradouro 	= document.getElementById('Logradouro');
-const inputComplemento 	= document.getElementById('Complemento');
-const inputBairro 		= document.getElementById('Bairro');
-const inputCidade 		= document.getElementById('Cidade');
-const inputEscolaMedio  = document.getElementById('InputEscEnsinoMedio');
+const inputEmail 			= document.getElementById('EmailAdress');
+const inputView  			= document.getElementById('CurrentView');
+const inputNome  			= document.getElementById('NomeCompleto');
+const inputCep   			= document.getElementById('CEP');
+const inputLogradouro 		= document.getElementById('Logradouro');
+const inputNumero 			= document.getElementById('Numero');
+const inputComplemento 		= document.getElementById('Complemento');
+const inputBairro 			= document.getElementById('Bairro');
+const inputCidade 			= document.getElementById('Cidade');
+const inputEscolaMedio  	= document.getElementById('EscolaEnsinoMedio');
+const inputCpf          	= document.getElementById('CPF');
+const inputDataNascimento	= document.getElementById('DataNascimento');
+const inputTelefone 		= document.getElementById('UsuarioTelefone')
+const inputEscolaridade 	= document.getElementById('UsuarioEscolaridade');
+const inputSenha 			= document.getElementById('UserPassword');
+const inputResenha 			= document.getElementById('ReUserPassword');
 
-const selectTipoUsuario = document.getElementById('TipoUsuario');
-const selectDisicplinas = document.getElementById('SelectDisciplina');
+const selectEtnia 			= document.getElementById('UsuarioEtnia');
+const selectGenero 			= document.getElementById('UsuarioGenero');
+const selectTipoUsuario 	= document.getElementById('TipoUsuario');
+const selectDisciplinas 	= document.getElementById('Disciplinas');
 
-const botaoEnviar 		= document.getElementById('botaoEnviar');
+const fieldDisciplinas  	= document.getElementById('FieldDisciplinas');
+const fieldEscolaMedio  	= document.getElementById('FieldEscEnsinoMedio');
+
+const botaoEnviar 			= document.getElementById('botaoEnviar');
 
 const validarEnderecoEmail = function () {
-	formatToLowerCase(inputEmail);
-	const enderecoEmail = inputEmail.value;
-	const viewAtual = inputView.value.trim();
 
-	const pEmail = '&EmailAdress=' + enderecoEmail;
-	const pMetodo = '&Method=CheckThisEmail';
-	const pView = '&CurrentView=' + viewAtual;
+	inputEmail.value = valueParaCaixaBaixa(inputEmail);
+	const enderecoEmail = inputEmail.value;
 
 	if(enderecoEmail != ""){
-		const url = 'http://' + host + '/?RequestFromAjax=true' + pEmail + pMetodo + pView;
+		const url = 'http://' + host + '/api/registro/consultar/email/' + enderecoEmail;
 
-		$.get(url, function (data) {
-			const retorno = JSON.parse(eval(data));
-
-			console.log(retorno);
-			if (!retorno.valido){
-				window.alert( "Email já cadastrado anteriormente." );
+		$.ajax({
+			type: "GET",
+			url: url,
+			dataType: 'json',
+			beforeSend: function (xhr) {
+			   xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass));
+			},
+			success: function (retorno){
+				if (!retorno.valido)
+					window.alert( "Email inválido, por gentileza tentar outro." );
+			},
+			error: function (response){
+			   ////	error
 			}
 		});
 	}
@@ -43,7 +58,7 @@ const validarNomeCompleto = function () {
 
 const validarCep = function () {
 	const numeroCep = inputCep.value;
-	consultaCep(numeroCep);
+	consultarCep(numeroCep);
 };
 
 const validarLogradouro = function () {
@@ -65,12 +80,17 @@ const validarCidade = function () {
 const validarTipoUsuario = function () {
 	const tipoUsuario = selectTipoUsuario.value;
 	if(tipoUsuario == 7){
-		$(selectDisicplinas).removeClass('hide');
-		$(inputEscolaMedio).addClass('hide');
+		$(fieldDisciplinas).removeClass('hide');
+		$(fieldEscolaMedio).addClass('hide');
 	} else {
-		$(selectDisicplinas).addClass('hide');
-		$(inputEscolaMedio).removeClass('hide');
+		$(fieldDisciplinas).addClass('hide');
+		$(fieldEscolaMedio).removeClass('hide');
 	}
+};
+
+const validarEscolaEnsinoMedio = function () {
+	inputEscolaMedio.value = valueParaCaixaAlta(inputEscolaMedio);
+
 };
 
 inputNome.addEventListener('change', validarNomeCompleto);
@@ -80,8 +100,7 @@ inputComplemento.addEventListener('change', validarComplemento);
 inputBairro.addEventListener('change', validarBairro);
 inputCidade.addEventListener('change', validarCidade);
 inputEmail.addEventListener('change', validarEnderecoEmail);
-
-botaoEnviar.addEventListener('click', validarFormulario);
+inputEscolaMedio.addEventListener('change', validarEscolaEnsinoMedio);
 
 selectTipoUsuario.addEventListener('change', validarTipoUsuario);
 
@@ -99,122 +118,148 @@ const valueParaCaixaBaixa = function (input) {
 	return textoCaixaBaixa;
 };
 
-function appendMessageInputVazio( sNomeCampo, sMensagemErro ){
-	if ( (sMensagemErro == "") )
-		sMensagemErro += ("Campo " + sNomeCampo + " deve ser preenchido.");
+function campoNaoPreenchido( titulo, mensagem ){
+	if ( (mensagem == "") )
+		mensagem += ("Campo " + titulo + " deve ser preenchido.");
 	else
-		sMensagemErro += ("\nCampo " + sNomeCampo + " deve ser preenchido.");
-	return sMensagemErro;
+		mensagem += ("\nCampo " + titulo + " deve ser preenchido.");
+	return mensagem;
 }
 
-function formatDate( sDate ) {
+function formatarData( data ) {
 
-	var aDate = sDate.split( "/" );
+	const arrayData = data.split( "/" );
 
-	var day = aDate[0];
-	var year = aDate[2];
-	var month = aDate[1];
+	const dia = arrayData[0];
+	const ano = arrayData[2];
+	const mes = arrayData[1];
 
-    return [year, month, day].join('-');
+    return [ano, mes, dia].join('-');
 }
 
-function validarFormulario(){
+const criptografar = function (texto) {
+	let textoCriptografado = "";
 
-	var sNomeCompleto 	= $( "#NomeCompleto" ).val().trim();
-	var sCPF 			= $( "#CPF" ).val();
-	var sDataNascimento = $( "#DataNascimento" ).val();
-	var sEtnia 			= $( "#UsuarioEtnia" ).val();
-	var sGenero 		= $( "#UsuarioGenero" ).val();
-	var sUserTelefone	= $( "#UsuarioTelefone" ).val();
-	var sEscolaridade 	= $( "#UsuarioEscolaridade" ).val();
-	var sCEP 			= $( "#CEP" ).val();
-	var sLogradouro 	= $( "#Logradouro" ).val().trim();
-	var sNumero 		= $( "#Numero" ).val().trim();
-	var sComplemento 	= $( "#Complemento" ).val().trim();
-	var sBairro 		= $( "#Bairro" ).val().trim();
-	var sCidade 		= $( "#Cidade" ).val().trim();
-	var sEmailAdress 	= $( "#EmailAdress" ).val().trim();
-	var sTipoUsuario 	= $( "#TipoUsuario" ).val();
-	var sDisciplinas 	= $( "#Disciplinas" ).val();
-	var sEscEnsinoMedio = $( "#EscolaEnsinoMedio" ).val().trim();
-	var sUserPassword   = $( "#UserPassword" ).val().trim();
-	var sReUserPassword = $( "#ReUserPassword" ).val().trim();
+	if(texto)
+		textoCriptografado = md5(texto);
 
-	var sMensagemErro = "";
+	return textoCriptografado;
+};
 
-	if ( (sNomeCompleto == "") || (sNomeCompleto == null) )
-		sMensagemErro = appendMessageInputVazio( "NOME COMPLETO", sMensagemErro );
-	if ( (sCPF == "") || (sCPF == null) )
-		sMensagemErro = appendMessageInputVazio( "CPF", sMensagemErro );
-	if ( (sDataNascimento == "") || (sDataNascimento == null) )
-		sMensagemErro = appendMessageInputVazio( "DATA NASCIMENTO", sMensagemErro );
-	if ( (sEtnia == "") || (sEtnia == null) )
-		sMensagemErro = appendMessageInputVazio( "ETNIA", sMensagemErro );
-	if ( (sGenero == "") || (sGenero == null) )
-		sMensagemErro = appendMessageInputVazio( "GÊNERO", sMensagemErro );
-	if ( (sUserTelefone == "") || (sUserTelefone == null) )
-		sMensagemErro = appendMessageInputVazio( "WHATSAPP", sMensagemErro );
-	if ( (sEscolaridade == "") || (sEscolaridade == null) )
-		sMensagemErro = appendMessageInputVazio( "ESCOLARIDADE", sMensagemErro );
+const validarFormulario = function (){
 
-	if ( (sCEP == "") || (sCEP == null) )
-		sMensagemErro = appendMessageInputVazio( "CEP", sMensagemErro );
-	if ( (sLogradouro == "") || (sLogradouro == null) )
-		sMensagemErro = appendMessageInputVazio( "LOGRADOURO", sMensagemErro );
-	if ( (sNumero == "") || (sNumero == null) )
-		sMensagemErro = appendMessageInputVazio( "NÚMERO", sMensagemErro );
-	if ( (sBairro == "") || (sBairro == null) )
-		sMensagemErro = appendMessageInputVazio( "BAIRRO", sMensagemErro );
-	if ( (sCidade == "") || (sCidade == null) )
-		sMensagemErro = appendMessageInputVazio( "CIDADE", sMensagemErro );
+	const senha = criptografar(inputSenha.value.trim());
+	const resenha = criptografar(inputResenha.value.trim());
 
-	if ( (sEmailAdress == "") || (sEmailAdress == null) )
-		sMensagemErro = appendMessageInputVazio( "ENDEREÇO EMAIL", sMensagemErro );
+	const dadosNovoUsuario = {
+		'nomeCompleto': {
+			'titulo': 'Nome Completo',
+			'value': inputNome.value.trim()
+		},
+		'cpf': {
+			'titulo': 'CPF',
+			'value': inputCpf.value.trim()
+		},
+		'dataNascimento': {
+			'titulo': 'Data Nascimento',
+			'value': formatarData(inputDataNascimento.value.trim())
+		},
+		'etnia': {
+			'titulo': 'Etnia',
+			'value': selectEtnia.value.trim()
+		},
+		'genero': {
+			'titulo': 'Gênero',
+			'value': selectGenero.value.trim()
+		},
+		'telefone': {
+			'titulo': 'Telefone',
+			'value': inputTelefone.value.trim()
+		},
+		'escolaridade': {
+			'titulo': 'Escolaridade',
+			'value': inputEscolaridade.value.trim()
+		},
+		'cep': {
+			'titulo': 'CEP',
+			'value': inputCep.value.trim()
+		},
+		'logradouro': {
+			'titulo': 'Logradouro',
+			'value': inputLogradouro.value.trim()
+		},
+		'numero': {
+			'titulo': 'Whatsapp',
+			'value': inputNumero.value.trim()
+		},
+		'complemento': {
+			'titulo': 'Complemento',
+			'value': inputComplemento.value.trim()
+		},
+		'bairro': {
+			'titulo': 'Bairro',
+			'value': inputBairro.value.trim()
+		},
+		'cidade': {
+			'titulo': 'Cidade',
+			'value': inputCidade.value.trim()
+		},
+		'email': {
+			'titulo': 'Endereço Email',
+			'value': inputEmail.value.trim()
+		},
+		'tipoUsuario': {
+			'titulo': 'Tipo Usuario',
+			'value': selectTipoUsuario.value.trim()
+		},
+		'disciplinas': {
+			'titulo': 'Disciplinas',
+			'value': $(selectDisciplinas).val()
+		},
+		'escolaMedio': {
+			'titulo': 'Escola Ensino Médio',
+			'value': inputEscolaMedio.value.trim()
+		},
+		'senha': {
+			'titulo': 'Campo Senha',
+			'value': senha
+		},
+		'resenha': {
+			'titulo': 'Campo Confirmação Senha',
+			'value': resenha
+		}
+	};
 
-	if ( (sTipoUsuario == "") || (sTipoUsuario == null) )
-		sMensagemErro = appendMessageInputVazio( "TIPO DE CADASTRO", sMensagemErro );
-	if ( (sTipoUsuario == "P") && ((sDisciplinas == "") || (sDisciplinas == null)) )
-		sMensagemErro = appendMessageInputVazio( "DISCIPLINAS", sMensagemErro );
-	if ( (sTipoUsuario == "A") && ((sEscEnsinoMedio == "") || (sEscEnsinoMedio == null)) )
-		sMensagemErro = appendMessageInputVazio( "ESCOLA FORMAÇÃO ENSINO MÉDIO", sMensagemErro );
+	let mensagemErro = "";
 
-	if ( (sUserPassword == "") || (sUserPassword == null) )
-		sMensagemErro = appendMessageInputVazio( "SENHA", sMensagemErro );
+	forEach(dadosNovoUsuario, function (elemento, prop) {
+		if(elemento.value == "")
+			mensagemErro = campoNaoPreenchido(elemento.titulo, mensagemErro);
+	})
 
-	sUserPassword   = md5( $( "#UserPassword" ).val().trim() );
-	sReUserPassword = md5( $( "#ReUserPassword" ).val().trim() );
+	if(!mensagemErro){
+		if(dadosNovoUsuario.cpf.value.length != 14)
+			mensagemErro += "\nFavor revisar o campo CPF.";
+		
+		if(dadosNovoUsuario.cep.value.length != 9)
+			mensagemErro += "\nFavor revisar o campo CEP.";
 
-	var formPreenchido = (sMensagemErro == "");
+		if(dadosNovoUsuario.email.value.indexOf('@') == -1)
+			mensagemErro += "\nFavor revisar o campo E-Mail.";
 
-	if ( ((sCPF != "") && (sCPF != null)) && (sCPF.length != 14)  )
-		if ( formPreenchido )
-			sMensagemErro += "\nFavor revisar o campo CPF.";
-
-	if ( ((sCEP != "") && (sCEP != null)) && (sCEP.length != 9)  )
-		if ( formPreenchido )
-			sMensagemErro += "\nFavor revisar o campo CEP.";
-
-	if ( sEmailAdress.indexOf( "@" ) == -1 )
-		if ( formPreenchido )
-			sMensagemErro += "\nFavor revisar o campo E-Mail.";
-
-	if ( sUserPassword != sReUserPassword )
-		if ( formPreenchido )
-			sMensagemErro += "\nAs senhas não conferem.";
-
-	if ( sMensagemErro != "" ){
-		window.alert( sMensagemErro );
+		if(senha != resenha)
+			mensagemErro += "\nAs senhas não conferem.";
 	}
-	else{
-		$( "#DataNascimento" ).val( formatDate( sDataNascimento ) );
-		$( "#UserPassword" ).val( sUserPassword );
-		$( "#ReUserPassword" ).val( sReUserPassword );
-		$( "#NewRegisterForm" ).val( "true" );
-		$( "#FormView" ).submit();
+
+	const dadosParaRetorno = {
+		'mensagemErro': mensagemErro,
+		'dadosNovoUsuario': dadosNovoUsuario
 	}
+
+	return dadosParaRetorno;
 }
 
-function consultaCep(numeroCep){
+function consultarCep(numeroCep){
 	const url = 'https://viacep.com.br/ws/' + numeroCep + '/json/';
 	$.get(url, function (data) {
 		const retorno = eval(data);
@@ -224,12 +269,12 @@ function consultaCep(numeroCep){
 	});
 }
 
-$( "#Numero" ).mask( "99999999" );
-$( "#CEP" ).mask( "99999-999" );
-$( "#CPF" ).mask( "999.999.999-99" );
-$( "#UsuarioTelefone" ).mask( "(99) 9 9999-9999" );
+$(inputNumero).mask( "99999999" );
+$(inputCep).mask( "99999-999" );
+$(inputCpf).mask( "999.999.999-99" );
+$(inputTelefone).mask( "(99) 9 9999-9999" );
 
-$( "#DataNascimento" ).mask( "99/99/9999" );
+$(inputDataNascimento).mask( "99/99/9999" );
 
 $( "#CalendarioDataNascimento" ).calendar( {
 	type: "date",
@@ -247,6 +292,64 @@ $( "#CalendarioDataNascimento" ).calendar( {
 		}
 	}
 } );
+
+const prepararDados = function (dadosNovoUsuario) {
+	const dadosParaEnvio = {
+		'nomeCompleto': dadosNovoUsuario.nomeCompleto.value,
+		'cpf': dadosNovoUsuario.cpf.value,
+		'dataNascimento': dadosNovoUsuario.dataNascimento.value,
+		'etnia': dadosNovoUsuario.etnia.value,
+		'genero': dadosNovoUsuario.genero.value,
+		'telefone': dadosNovoUsuario.telefone.value,
+		'escolaridade': dadosNovoUsuario.escolaridade.value,
+		'cep': dadosNovoUsuario.cep.value,
+		'logradouro': dadosNovoUsuario.logradouro.value,
+		'numero': dadosNovoUsuario.numero.value,
+		'complemento': dadosNovoUsuario.complemento.value,
+		'bairro': dadosNovoUsuario.bairro.value,
+		'cidade': dadosNovoUsuario.cidade.value,
+		'email': dadosNovoUsuario.email.value,
+		'tipoUsuario': dadosNovoUsuario.tipoUsuario.value,
+		'disciplinas': dadosNovoUsuario.disciplinas.value,
+		'escolaMedio': dadosNovoUsuario.escolaMedio.value,
+		'senha': dadosNovoUsuario.senha.value,
+		'resenha': dadosNovoUsuario.resenha.value
+	};
+
+	return dadosParaEnvio;
+}
+
+const enviarDados = function (dadosNovoUsuario) {
+	const url = 'http://' + host + '/api/registro/cadastrar';
+
+	$.ajax({
+		type: "POST",
+		url: url,
+		dataType: 'json',
+		data: prepararDados(dadosNovoUsuario),
+		beforeSend: function (xhr) {
+			xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass));
+		},
+		success: function (retorno){
+			window.alert(retorno.mensagem);
+			$(formView).submit();
+		},
+		error: function (response){
+			////	error
+		}
+	});
+};
+
+const concluirCadastro = function () {
+	const validacao = validarFormulario();
+
+	if(validacao.mensagemErro > "")
+		alert(validacao.mensagemErro);
+	else 
+		enviarDados(validacao.dadosNovoUsuario);
+};
+
+botaoEnviar.addEventListener('click', concluirCadastro);
 
 function simulaFormPreenchido(){
 	$( "#NomeCompleto" ).val( "JOAO TESTE" );
@@ -266,4 +369,4 @@ function simulaFormPreenchido(){
 	$( "#TipoUsuario" ).val( 7 );
 	$( "#Disciplinas" ).val( [1, 2, 3 ] );
 	$( "#EscolaEnsinoMedio" ).val( "EMEIEF" );
-}////simulaFormPreenchido();
+}simulaFormPreenchido();

@@ -7,12 +7,6 @@
 			$this->setTwig(Twig::getInstancia());
 		}
 
-		public function verificaSolicitacaoRegistro() {
-			$parametro = $this->obtenhaParametro('getNewRegister');
-
-            return ($parametro == "true");
-		}
-
 		public function verificaSolicitacaoLogin() {
 			$model = $this->getModel();
 
@@ -25,17 +19,12 @@
 		}
 
 		public function start() {
-			$novoRegistro = $this->verificaSolicitacaoRegistro();
 			$loginSuscedido = $this->verificaSolicitacaoLogin();
 
-			if($novoRegistro){
-				(new RegistroController)->imprimirTela();
-			} else {
-				if($loginSuscedido)
-					echo "logado com sucesso";
-				else
-					$this->imprimirTela();
-			}
+			if($loginSuscedido)
+				echo "logado com sucesso";
+			else
+				$this->imprimirTela();
 		}
 
 		public function imprimirTela() {

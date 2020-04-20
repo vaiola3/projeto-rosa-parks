@@ -2,9 +2,14 @@
 
     require_once('../vendor/autoload.php');
 
-    require_once("../app/config/env.php");
+	require_once("../app/config/env.php");
+	require_once("../app/config/Conexao.php");
 
-    require_once('controllers/RegistroController.php');
+	require_once('controllers/Controller.php');
+	require_once('controllers/RegistroController.php');
+	
+	require_once('models/Model.php');
+	require_once('models/RegistroModel.php');
 
     use Psr\Http\Message\ServerRequestInterface as Request;
 	use Psr\Http\Message\ResponseInterface as Response;
@@ -30,23 +35,38 @@
 		return $basicAuth;
     };
 
-    #	routes
+	#	routes	GET
+	
+	$app->group('/registro/consultar', function () use ($app) {
+		$controller = new RegistroController;
 
-    $app->group('/registro', function () use ($app) {
-
-    	$controller = new RegistroController;
-
-    	$app->get('/consultarEmail/{email}', function ($request, $response, $args) use ($controller) {
+		$app->get('/email/{email}', function ($request, $response, $args) use ($controller) {
 
     		$enderecoEmail = $args['email'];
 
-    		$retorno = $controller->consultarEmail($enderecoEmail);
+    		$retorno = $controller->verificarEmail($enderecoEmail);
 
     		$json = $response->withJson($retorno['data'], 201);
 
     		return $json;
-    	});
+		});
+	})->add(basicAuth());
 
+	#	routes	POST
+
+    $app->group('/registro', function () use ($app) {
+		$controller = new RegistroController;
+		
+		$app->post('/cadastrar', function ($request, $response, $args) use ($controller) {
+
+			$dadosNovoUsuario = $request->getParams();
+
+			$retornoController = $controller->cadastrarNovoUsuario($dadosNovoUsuario);
+
+			$json = $response->withJson($retornoController);
+
+			return $json;
+		});
     })->add(basicAuth());
 
     #	run

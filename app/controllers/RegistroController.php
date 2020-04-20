@@ -6,10 +6,6 @@
 			$this->setTwig(Twig::getInstancia());
 		}
 
-		public function verificaNecessidadeValidarFormulario() {
-			////	
-		}
-
 		public function start() {
 			$this->imprimirTela();
 		}

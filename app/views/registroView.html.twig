@@ -3,8 +3,8 @@
 {% block conteudoPagina %}
 
 <link rel="stylesheet" type="text/css" href="dist/semantic/calendar.min.css">
-
-<div class="ui container" style="padding-top: 1vh">
+<div style="height: 10%;"></div>
+<div class="ui container">
 	<div class="ui one column middle center aligned grid">
 		<div class="twelve wide mobile teen wide tablet eight wide computer column">
 			<form class="ui form" id="FormView" name="FormView" method="POST">
@@ -192,7 +192,7 @@
 					</select>
 				</div>	<!-- TIPO USUARIO -->
 
-				<div id="SelectDisciplina" class="field hide">
+				<div id="FieldDisciplinas" class="field hide">
 					<label class="titulo-medio">Dou aula de...</label>
 					<select 
 						class="ui fluid search dropdown" 
@@ -205,15 +205,14 @@
 					</select>
 				</div>	<!-- DISCIPLINAS -->
 
-				<div class="field hide" id="InputEscEnsinoMedio">
+				<div class="field hide" id="FieldEscEnsinoMedio">
 					<label class="titulo-medio">Escola onde estuda ou estudou</label>
 					<div class="ui large icon input">
 						<input 
 							type="text" 
 							class="caixa-alta"
 							name="EscolaEnsinoMedio"
-							id="EscolaEnsinoMedio" 
-							onchange="formatToUpperCase( this );"
+							id="EscolaEnsinoMedio"
 						placeholder="Escola Formação Ensino Médio">
 					</div>
 				</div>	<!-- ESCOLA ENSINO MEDIO -->
@@ -248,20 +247,14 @@
 
 				<input 
 					type="hidden" 
-					name="RequestFromAjax" 
-					id="RequestFromAjax" 
-				value="false">
-
-				<input 
-					type="hidden" 
 					name="CurrentView" 
 					id="CurrentView" 
 				value="RegisterView">
 
 				<input 
 					type="hidden" 
-					name="NewRegisterForm" 
-					id="NewRegisterForm" 
+					name="ValideFormulario" 
+					id="ValideFormulario" 
 				value="false">
 
 				{% block inputLogout %}{{ parent() }}{% endblock %}

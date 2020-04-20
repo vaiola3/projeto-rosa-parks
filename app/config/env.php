@@ -1,11 +1,13 @@
 <?php
     $variaveis = [
-        'DB_HOST' => 'localhost',
+        'DB_HOST'     => 'localhost',
         'DB_USERNAME' => 'root',
         'DB_PASSWORD' => '',
-        'DB_NAME' => 'programacaoferiasverao2020',
-        'DB_PORT' => '3306',
-        'APP_HOST' => 'refatorosaparks'
+        'DB_NAME'     => 'projetorosaparks',
+        'DB_PORT'     => '3306',
+        'APP_HOST'    => 'projetorosaparks',
+        'API_USER'    => 'root',
+        'API_PASS'    => '123'
     ];
 
     foreach ($variaveis as $key => $value) {
