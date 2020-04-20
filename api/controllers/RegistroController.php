@@ -8,25 +8,23 @@
 
 		public function cadastrarNovoUsuario($dadosNovoUsuario) {
 			$model = $this->getModel();
-			$dadosOperacao = ['erro' => false, 'mensagem' => ''];
+			$dadosRetorno = ['erro' => false, 'mensagem' => ''];
 
-			foreach($dadosNovoUsuario as $key => $value){
-				if($value == ''){
-					$dadosOperacao['erro'] = true;
-					$dadosOperacao['mensagem'] += "Campo {$key} em branco\n";
-				}
+			$erro = $this->validarParametros($dadosNovoUsuario);
+
+			if(!$erro){
+				$erro = ($model->cadastrarNovoUsuario($dadosNovoUsuario) == 0);
 			}
 
-			if(!$dadosOperacao['erro']){
-				$dadosOperacao['erro'] = ($model->cadastrarNovoUsuario($dadosNovoUsuario) == 0);
+			if($erro){
+				$dadosRetorno['erro'] = true;
+				$dadosRetorno['mensagem'] = 'Ocorreu um erro!';
+			} else {
+				$dadosRetorno['erro'] = false;
+				$dadosRetorno['mensagem'] = 'Cadastro realizado com sucesso!';
 			}
 
-			if(!$dadosOperacao['erro'])
-				$dadosOperacao['mensagem'] = 'Cadastro realizado com sucesso!';
-			else
-				$dadosOperacao['mensagem'] = 'Ocorreu um erro!';
-
-			return $dadosOperacao;
+			return $dadosRetorno;
 		}
 
     	public function verificarEmail($email) {
@@ -41,6 +39,16 @@
     		];
 
     		return $resposta;
+		}
+
+		private function validarParametros($parametros) {
+			$erro = false;
+			foreach($parametros as $key => $value){
+				if($value == ''){
+					$erro = true;
+				}
+			}
+			return $erro;
 		}
 		
     }
