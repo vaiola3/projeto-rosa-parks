@@ -1,5 +1,7 @@
 {% extends 'estrutura.html.twig' %}
 {% block conteudoPagina %}
+<link rel="stylesheet" href="/dist/data-tables/dataTables.semanticui.min.css">
+<link rel="stylesheet" href="/dist/data-tables/scroller.dataTables.min.css">
 <div class="ui container">
 	<div class="ui grid">
 
@@ -40,45 +42,17 @@
 							Opções de Registro
 						</a> -->
 					</div>
-					
-					<div 
-						id="UsuariosSemAcesso" 
-						class="ui bottom attached segment hide scroll">
-						{% for key, value in USUARIOS_SEM_ACESSO %}
-						<h1>{{value}}</h1>
-						{% endfor %}
-					</div>
 
 					<div 
-						id="UsuariosAtivos" 
-						class="ui bottom attached segment hide scroll">
-						{% for key, value in USUARIOS_ATIVOS %}
-						<h1>{{value}}</h1>
-						{% endfor %}
-					</div>
-
-					<div 
-						id="AulasDadas" 
-						class="ui bottom attached segment hide">
-						{% for key, value in AULAS_DADAS %}
-						<h1>{{value}}</h1>
-						{% endfor %}
-					</div>
-
-					<div 
-						id="AulasAssistidas" 
-						class="ui bottom attached segment hide">
-						{% for key, value in AULAS_ASSISTIDAS %}
-						<h1>{{value}}</h1>
-						{% endfor %}
-					</div>
-
-					<div 
-						id="OpcoesRegistro" 
-						class="ui bottom attached segment hide">
-						{% for key, value in OPCOES_REGISTRO %}
-						<h1>{{value}}</h1>
-						{% endfor %}
+						id="conteudo"
+						class="ui bottom attached segment scroll">
+						{# <table
+							class="ui very compact celled small table" 
+							id="tabelaConteudo">
+							<thead>
+								<tr id="headersConteudo"></tr>
+							</thead>
+						</table> #}
 					</div>
 				</div>
 				
@@ -94,7 +68,15 @@
 	</form>
 
 </div>
+<script>
+	const host = "{{urlHost}}";
+	const user = "{{API_USER}}";
+	const pass = "{{API_PASS}}";
+</script>
 <script src="/dist/js/jquery-3.4.1.min.js"></script>
+<script src="/dist/data-tables/jquery.dataTables.min.js"></script>
+<script src="/dist/data-tables/dataTables.semanticui.min.js"></script>
+<script src="/dist/data-tables/dataTables.scroller.min.js"></script>
 <script src="/dist/js/md5.min.js"></script>
 <script src="/dist/semantic/semantic.min.js"></script>
 <script src="/dist/js/views/adminView.js"></script>

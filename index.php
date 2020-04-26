@@ -5,9 +5,7 @@
     require_once('vendor/autoload.php');
 
     require_once("app/config/env.php");
-
     require_once("app/config/Twig.php");
-
     require_once("app/config/Conexao.php");
 
     require_once("app/models/Model.php");

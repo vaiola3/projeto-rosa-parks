@@ -7,9 +7,11 @@
 
 	require_once('controllers/Controller.php');
 	require_once('controllers/RegistroController.php');
+	require_once('controllers/AdminController.php');
 	
 	require_once('models/Model.php');
 	require_once('models/RegistroModel.php');
+	require_once('models/AdminModel.php');
 
     use Psr\Http\Message\ServerRequestInterface as Request;
 	use Psr\Http\Message\ResponseInterface as Response;
@@ -53,6 +55,21 @@
 	})->add(basicAuth());
 
 	#	routes	POST
+
+	$app->group('/admin', function () use ($app) {
+		$controller = new AdminController;
+		
+		$app->post('/consultar', function ($request, $response, $args) use ($controller) {
+
+			$solicitacao = $request->getParams();
+
+			$retornoController = $controller->consultar($solicitacao);
+
+			$json = $response->withJson($retornoController);
+
+			return $json;
+		});
+    })->add(basicAuth());
 
     $app->group('/registro', function () use ($app) {
 		$controller = new RegistroController;

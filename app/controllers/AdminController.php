@@ -13,35 +13,15 @@
         public function imprimirTela() {
             $model = $this->getModel();
 
-            $usuariosSemAcesso = [
-                'USUARIOS_SEM_ACESSO'
-            ];
-
-            $usuariosAtivos = [
-                'USUARIOS_ATIVOS'
-            ];
-
-            $aulasDadas = [
-                'AULAS_DADAS'
-            ];
-
-            $aulasAssistidas = [
-                'AULAS_ASSISTIDAS'
-            ];
-
-            $opcoesRegistro = [
-                'OPCOES_REGISTRO'
-            ];
+            $primeiroNome = explode(' ', $_SESSION['nome'])[0];
             
             $args = [
-                'NOME_USUARIO'        => 'NOME_USUARIO',
-                'USUARIOS_SEM_ACESSO' => $usuariosSemAcesso,
-                'USUARIOS_ATIVOS'     => $usuariosAtivos,
-                'AULAS_DADAS'         => $aulasDadas,
-                'AULAS_ASSISTIDAS'    => $aulasAssistidas,
-                'OPCOES_REGISTRO'     => $opcoesRegistro,
-				'iconeLogout' 	      => 'out',
-				'mensagemLogout'      => 'Sair'
+                'API_USER'  	    => env('API_USER'),
+				'API_PASS'          => env('API_PASS'),
+				'urlHost'           => env('APP_HOST'),
+                'NOME_USUARIO'      => $primeiroNome,
+				'iconeLogout' 	    => 'out',
+				'mensagemLogout'    => 'Sair'
 			];
 
 			$this->imprimirConteudo('adminView.html', $args);

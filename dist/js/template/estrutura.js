@@ -2,13 +2,13 @@ const botaoSair   = document.getElementById('botaoSair');
 const inputLogout = document.getElementById('LogOutSession');
 const formView    = document.getElementById('FormView');
 
-const logOut = function () {
+const sair = function () {
     inputLogout.value = 'true';
     $(formView).submit();
 };
 
 if(botaoSair)
-    botaoSair.addEventListener('click', logOut);
+    botaoSair.addEventListener('click', sair);
 
 $('.ui.dropdown').dropdown();
 $('.tabular.menu .item').tab();

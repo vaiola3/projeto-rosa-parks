@@ -13,7 +13,6 @@
 		private function imprimirTela() {
 			$model = $this->getModel();
 
-			$urlHost       = env('APP_HOST');
 			$etnias        = $model->consultarEtniasCadastradas();
 			$generos       = $model->consultarGenerosCadastrados();
 			$escolaridades = $model->consultarEscolaridadesCadastradas();
@@ -23,7 +22,7 @@
 			$args = [
 				'API_USER'  	 => env('API_USER'),
 				'API_PASS'       => env('API_PASS'),
-				'urlHost'        => $urlHost,
+				'urlHost'        => env('APP_HOST'),
 				'etnias'         => $etnias,
 				'generos' 		 => $generos,
 				'escolaridades'  => $escolaridades,

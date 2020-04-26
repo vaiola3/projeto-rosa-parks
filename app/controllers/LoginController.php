@@ -7,29 +7,48 @@
 			$this->setTwig(Twig::getInstancia());
 		}
 
-		public function verificaSolicitacaoLogin() {
+		public function start() {
+
+			if($this->logar()){
+				$this->carregarEntidade();
+			} else if(isset($_SESSION['id_tipo_usuario'])){
+				$this->carregarEntidade();
+			} else {
+				$this->imprimirTela();
+			}
+		}
+
+		public function imprimirTela() {
+			$model = $this->getModel();
+			$this->imprimirConteudo('loginView.html.twig',[]);
+		}
+
+		private function logar() {
 			$model = $this->getModel();
 
-			$email = $this->obtenhaParametro('EmailUsuario');
-			$senha = $this->obtenhaParametro('SenhaUsuario');
+			$email = $this->obterParametro('EmailUsuario');
+			$senha = $this->obterParametro('SenhaUsuario');
 
 			$loginValido = $model->validaLogin($email, $senha);
 
 			return $loginValido;
 		}
 
-		public function start() {
-			$loginSuscedido = $this->verificaSolicitacaoLogin();
-
-			if($loginSuscedido)
-				echo "logado com sucesso";
-			else
-				$this->imprimirTela();
+		private function _carregarEntidade() {
+			var_dump($_SESSION);
 		}
 
-		public function imprimirTela() {
-			$model = $this->getModel();
-			$this->imprimirConteudo('loginView.html.twig',[]);
+		private function carregarEntidade() {
+			if(isset($_SESSION['id'])){
+				$tipoUsuario = $_SESSION['tipo_usuario'];
+
+				if($tipoUsuario == 'Administrador')
+					(new AdminController)->start();
+				// if($tipoUsuario == 'Professor')
+					// (new ProfessorController)->start();
+				if($tipoUsuario == 'Aluno')
+					(new AlunoController)->start();
+			}
 		}
 
 		#	getters / setters

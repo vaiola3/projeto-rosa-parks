@@ -369,4 +369,4 @@ function simulaFormPreenchido(){
 	$( "#TipoUsuario" ).val( 7 );
 	$( "#Disciplinas" ).val( [1, 2, 3 ] );
 	$( "#EscolaEnsinoMedio" ).val( "EMEIEF" );
-}simulaFormPreenchido();
+}////simulaFormPreenchido();

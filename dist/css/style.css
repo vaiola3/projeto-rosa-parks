@@ -3,3 +3,13 @@ body {
     background-size: auto !important;
     padding-top: 84px;
 }
+
+table {
+    width: 100% !important;
+}
+
+tr, td {
+    white-space: nowrap;
+    line-height: 0.8 !important;
+    /* line-height: 100% !important; */
+}

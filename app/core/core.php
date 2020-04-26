@@ -2,32 +2,33 @@
 
 	class Core {
 		private $proxController;
-		private $templateEstrutura;
-
-		private function verificaSolicitacaoRegistro() {
-			$parametro = $this->obtenhaParametro('getNewRegister');
+		private function verificarSolicitacaoRegistro() {
+			$parametro = $this->obterParametro('getNewRegister');
             return ($parametro == "true");
+		}
+
+		private function verificarSolicitacaoLogout() {
+			$parametro = $this->obterParametro('LogOutSession');
+			if($parametro == "true"){
+				session_destroy();
+                $_SESSION = [];
+			}
 		}
 
 		public function carregarConteudo() {
 
-			$usuarioLogado = isset($_SESSION["id_tipo_usuario"]);
-			$solicitouCadastro = $this->verificaSolicitacaoRegistro();
+			$this->verificarSolicitacaoLogout();
 
-			if($usuarioLogado){
-				echo "usuario logado";
+			$solicitouCadastro = $this->verificarSolicitacaoRegistro();
+
+			if($solicitouCadastro){
+				(new RegistroController)->start();
 			} else {
-				if($solicitouCadastro){
-					(new RegistroController)->start();
-				} else {
-					(new LoginController)->start();
-				}
-				// (new AlunoController)->start();
-				// (new AdminController)->start();
+				(new LoginController)->start();
 			}
 		}
 
-		private function obtenhaParametro($parametro) {
+		private function obterParametro($parametro) {
 			$resultado = filter_input( 
                 INPUT_POST, 
                 $parametro, 
@@ -39,22 +40,6 @@
 		}
 
 		#	getters / setters
-
-		private function getTemplateEstrutura() {
-			return $this->templateEstrutura;
-		}
-
-		private function setTemplateEstrutura($estrutura) {
-			$this->templateEstrutura = $estrutura;
-		}
-
-		private function getProxController() {
-			return $this->proxController;
-		}
-
-		private function setProxController($controller) {
-			$this->proxController = $controller;
-		}
 	}
 
  ?>
