@@ -5,7 +5,7 @@
         'DB_PASSWORD' => '',
         'DB_NAME'     => 'projetorosaparks',
         'DB_PORT'     => '3306',
-        'APP_HOST'    => 'projetorosaparks',
+        'APP_HOST'    => 'rosa.parks',
         'API_USER'    => 'root',
         'API_PASS'    => '123'
     ];

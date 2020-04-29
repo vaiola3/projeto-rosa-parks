@@ -1,4 +1,5 @@
-const abaUsuariosSemAcesso = document.getElementById('UsuariosSemAcessoTittle');
+const abaAlunosSemAcesso = document.getElementById('AlunosSemAcessoTittle');
+const abaProfessoresSemAcesso = document.getElementById('ProfessoresSemAcessoTittle');
 const abaUsuariosAtivos = document.getElementById('UsuariosAtivosTittle');
 const abaAulasDadas = document.getElementById('AulasDadasTittle');
 const abaAulasAssistidas = document.getElementById('AulasAssistidasTittle');
@@ -13,26 +14,27 @@ const ativar = function (id) {
     alert('ativar' + id);
 };
 
-const consultarServidor = function (dadosParaConsulta) {
+const consultarUsuarios = function (tipo, statusUsuarios) {
     $(carregando).removeClass('hide');
-    const url = 'http://' + host + '/api/admin/consultar';
-	$.ajax({
-		type: "POST",
-		url: url,
-		dataType: 'json',
-		data: dadosParaConsulta,
-		beforeSend: function (xhr) {
-			xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass));
-		},
-		success: function (retorno){
+
+    const url = 'http://' + host + '/api/usuario/consultar/' + tipo + '/' + statusUsuarios;
+
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: 'json',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass));
+        },
+        success: function (retorno){
             mostrarConteudo(retorno.titulosColunas, retorno.payload);
             $(carregando).addClass('hide');
         },
-		error: function (response){
+        error: function (response){
             $(carregando).addClass('hide');
-			////	error
-		}
-	});
+            ////    error
+        }
+    });
 };
 
 const criarTabela = function (nomeTabela, classes) {
@@ -56,9 +58,14 @@ const mostrarConteudo = function (titulosColunas, payload) {
     }).draw();
 };
 
-const listarUsuariosSemAcesso = function () {
-    criarTabela('usuariosSemAcesso', 'ui orange very compact table');
-    consultarServidor({'operacao': 'consultarUsuariosSemAcesso'});
+const listarAlunosSemAcesso = function () {
+    criarTabela('tabelaAlunosSemAcesso', 'ui orange very compact table');
+    consultarUsuarios('alunos', 'aguardando');
+}
+
+const listarProfessoresSemAcesso = function () {
+    criarTabela('tabelaProfessoresSemAcesso', 'ui pink very compact table');
+    consultarUsuarios('professores', 'aguardando');
 }
 
 const listarUsuariosAtivos = function () {
@@ -74,10 +81,11 @@ const listarUsuariosAtivos = function () {
     );
 }
 
-abaUsuariosSemAcesso.addEventListener('click', listarUsuariosSemAcesso);
+abaAlunosSemAcesso.addEventListener('click', listarAlunosSemAcesso);
+abaProfessoresSemAcesso.addEventListener('click', listarProfessoresSemAcesso)
 abaUsuariosAtivos.addEventListener('click', listarUsuariosAtivos);
 // abaAulasDadas.addEventListener('click', mostrarAulasDadas);
 // abaAulasAssistidas.addEventListener('click', mostrarAulasAssistidas);
 // abaOpcoesRegistro.addEventListener('click', mostrarOpcoesRegistro);
 
-listarUsuariosSemAcesso();
+listarAlunosSemAcesso();

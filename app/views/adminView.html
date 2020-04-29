@@ -2,10 +2,11 @@
 {% block conteudoPagina %}
 <link rel="stylesheet" href="/dist/data-tables/dataTables.semanticui.min.css">
 <link rel="stylesheet" href="/dist/data-tables/scroller.dataTables.min.css">
+<link rel="stylesheet" href="/dist/css/views/adminView.css">
 <div class="ui container">
 	<div class="ui grid">
 
-		<div class="row">
+		<div class="row boasVindasUsuario">
 			<div class="sixteen wide mobile sixteen wide tablet sixteen wide computer column">
 				<h1>Olá, {{ NOME_USUARIO }}</h1>
 			</div>
@@ -18,8 +19,13 @@
 					<div class="ui top attached tabular menu">
 						<a 
 							class="item active"
-							id="UsuariosSemAcessoTittle">
-							Usuários Sem Acesso
+							id="AlunosSemAcessoTittle">
+							Alunos Sem Acesso
+						</a>
+						<a 
+							class="item"
+							id="ProfessoresSemAcessoTittle">
+							Professores Sem Acesso
 						</a>
 						<a 
 							class="item"

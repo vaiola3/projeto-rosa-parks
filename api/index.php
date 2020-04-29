@@ -7,11 +7,11 @@
 
 	require_once('controllers/Controller.php');
 	require_once('controllers/RegistroController.php');
-	require_once('controllers/AdminController.php');
+	require_once('controllers/UsuarioController.php');
 	
 	require_once('models/Model.php');
 	require_once('models/RegistroModel.php');
-	require_once('models/AdminModel.php');
+	require_once('models/UsuarioModel.php');
 
     use Psr\Http\Message\ServerRequestInterface as Request;
 	use Psr\Http\Message\ResponseInterface as Response;
@@ -54,22 +54,35 @@
 		});
 	})->add(basicAuth());
 
-	#	routes	POST
+	$app->group('/usuario/consultar', function () use ($app) {
+		$controller = new UsuarioController;
 
-	$app->group('/admin', function () use ($app) {
-		$controller = new AdminController;
-		
-		$app->post('/consultar', function ($request, $response, $args) use ($controller) {
+		$app->get('/{tipoUsuario}/{status}', function ($request, $response, $args) use ($controller) {
 
-			$solicitacao = $request->getParams();
+			$tiposDisponiveis = [
+				'alunos' => true, 
+				'professores' => true
+			];
 
-			$retornoController = $controller->consultar($solicitacao);
+			$statusDisponiveis = [
+				'ativos' => true, 
+				'inativos' => true, 
+				'aguardando' => true
+			];
 
-			$json = $response->withJson($retornoController);
+			$retorno = [];
 
-			return $json;
+			if(isset($tiposDisponiveis[$args['tipoUsuario']]))
+				if(isset($statusDisponiveis[$args['status']]))
+					$retorno = $controller->consultar($args['tipoUsuario'], $args['status']);
+
+    		$json = $response->withJson($retorno);
+
+    		return $json;
 		});
-    })->add(basicAuth());
+	})->add(basicAuth());
+
+	#	routes	POST
 
     $app->group('/registro', function () use ($app) {
 		$controller = new RegistroController;

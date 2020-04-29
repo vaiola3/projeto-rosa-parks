@@ -1,5 +1,6 @@
 .item-fixo {
     position: absolute;
+    z-index: 999 !important;
 }
 
 .superior-esquerdo {
