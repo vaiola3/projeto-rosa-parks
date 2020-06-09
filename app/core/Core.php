@@ -1,17 +1,16 @@
 <?php 
 
 	class Core {
-		private $proxController;
 		private function verificarSolicitacaoRegistro() {
 			$parametro = $this->obterParametro('getNewRegister');
-            return ($parametro == "true");
+			return ($parametro == "true");
 		}
 
 		private function verificarSolicitacaoLogout() {
 			$parametro = $this->obterParametro('LogOutSession');
 			if($parametro == "true"){
 				session_destroy();
-                $_SESSION = [];
+        $_SESSION = [];
 			}
 		}
 
@@ -30,10 +29,10 @@
 
 		private function obterParametro($parametro) {
 			$resultado = filter_input( 
-                INPUT_POST, 
-                $parametro, 
-                FILTER_SANITIZE_STRING,
-                FILTER_FLAG_NO_ENCODE_QUOTES
+        INPUT_POST, 
+        $parametro, 
+        FILTER_SANITIZE_STRING,
+        FILTER_FLAG_NO_ENCODE_QUOTES
 			);
 
 			return $resultado;

@@ -1,11 +1,11 @@
 <?php
     $variaveis = [
         'DB_HOST'     => 'localhost',
-        'DB_USERNAME' => 'root',
-        'DB_PASSWORD' => '',
-        'DB_NAME'     => 'projetorosaparks',
+        'DB_USERNAME' => 'pereira',
+        'DB_PASSWORD' => '123',
+        'DB_NAME'     => 'rparks',
         'DB_PORT'     => '3306',
-        'APP_HOST'    => 'rosa.parks',
+        'APP_HOST'    => 'localhost:8080',
         'API_USER'    => 'root',
         'API_PASS'    => '123'
     ];
