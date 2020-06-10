@@ -1,25 +1,35 @@
-#   WHAT
+#   Projeto Rosa Parks
+![Badge](https://img.shields.io/github/license/vaiola3/projeto-rosa-parks)
 
-Uma aplicação web para gestão de cursinhos populares.
+Uma aplicação web para gestão de cursinhos populares com custo zero.
 
-#   WHY
+- [x] Cadastro de alunos e professores
+- [x] Listagem de grupos de usuários por tipo e status para admins
+- [ ] Tela inicial de boas-vindas personalizada
 
-Como professor voluntário em Cursinhos Populares notei que o controle da frequência dos alunos e informações mais detalhadas a respeito do perfil dos mesmos são necessidades inegáveis, quero dizer, para uma melhor gestão das atividades existe a necessidade de se ter essas informações seja para um melhor planejamento de curto prazo ou de longo prazo.
+> Status do Projeto: Em desenvolvimento :warning:
 
-Estará a disponibilização dos usuários da ferramenta uma série de relatórios sobre frequência, perfil dos alunos e constrole de usuários ativos e inativos.
+# Requisitos
+O projeto foi desenhado em [PHP](https://www.php.net/) 7.2+ puro e utiliza algumas libs de terceiros:
 
-Tendo esses registros outras informações obtidas durante o período letivo podem ser tratadas para fins de melhoria sejam do planejamento das aulas seja para organização do período letivo em si.
+- [TWIG](https://twig.symfony.com/doc/2.x/) v2.x
+- [Slim Framework](https://www.slimframework.com/docs/v3/) v3
+- [slim-basic-auth](https://github.com/tuupola/slim-basic-auth)
 
-#   HOW
+As dependências podem ser instaladas pelo [Composer](https://getcomposer.org/) utilizando o seguinte comando na pasta do projeto:
 
-- PHP (7.2)
-    - Slim (3.12.3) ;
-    - Twig (2.12.5) ;
-    - tuupola/slim-basic-auth (3.2.1) ;
-- JavaScript (ES6)
-    - Jquery (3.4.1) ;
-- HTML (5)
-- CSS (3)
-- Outros 
-    - SemanticUI (2.4.1) ;
-    - DataTables (1.10.20) ;
+```sh
+$ composer update
+```
+
+Também foram utilizadas para as views da aplicação as seguintes bibliotecas que se encontram no diretorio src
+- [JQuery](https://jquery.com/)
+- [Semantic UI](https://semantic-ui.com/)
+- [DataTables](https://www.datatables.net/)
+
+# Nota
+Para que você consiga hospedar a aplicação sem custo recomendo as seguintes plataformas:
+- [WebHostApp](https://www.000webhost.com/)
+- [InfinityFree](https://app.infinityfree.net/login)
+
+**Free software for equity**
