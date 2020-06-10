@@ -2,18 +2,25 @@
 {% block conteudoPagina %}
 <link rel="stylesheet" href="/dist/data-tables/dataTables.semanticui.min.css">
 <link rel="stylesheet" href="/dist/data-tables/scroller.dataTables.min.css">
+
+<!-- <link rel="stylesheet" href="/dist/data-tables/buttons.semanticui.min.css"> -->
+
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/se/dt-1.10.21/b-1.6.2/b-flash-1.6.2/b-html5-1.6.2/b-print-1.6.2/datatables.min.css"/> -->
+
+<link rel="stylesheet" type="text/css" href="/dist/data-tables/datatables.min.css"/>
+ 
 <link rel="stylesheet" href="/dist/css/views/adminView.css">
 <div class="ui container">
 	<div class="ui grid">
 
 		<div class="row boasVindasUsuario">
-			<div class="sixteen wide mobile sixteen wide tablet sixteen wide computer column">
+			<div class="wide computer column">
 				<h1>Olá, {{ NOME_USUARIO }}</h1>
 			</div>
 		</div>
 
 		<div class="row">
-			<div class="sixteen wide mobile sixteen wide tablet sixteen wide computer column">
+			<div class="sixteen wide computer column">
 
 				<div class="ui segment">
 					<div class="ui top attached tabular menu">
@@ -24,29 +31,29 @@
 						</a>
 						<a 
 							class="item"
-							id="ProfessoresSemAcessoTittle">
-							Professores Sem Acesso
+							id="AlunosAtivosTittle">
+							Alunos Ativos
 						</a>
 						<a 
 							class="item"
-							id="UsuariosAtivosTittle">
-							Usuários Ativos
+							id="AlunosInativosTittle">
+							Alunos Inativos
 						</a>
-						<!-- <a 
+						<a 
 							class="item"
-							id="AulasDadasTittle">
-							Aulas Dadas
-						</a> -->
-						<!-- <a 
+							id="ProfessoresSemAcessoTittle">
+							Profs. Sem Acesso
+						</a>
+						<a 
 							class="item"
-							id="AulasAssistidasTittle">
-							Aulas Assistidas
-						</a> -->
-						<!-- <a 
+							id="ProfessoresAtivosTittle">
+							Profs. Ativos
+						</a>
+						<a 
 							class="item"
-							id="OpcoesRegistroTittle">
-							Opções de Registro
-						</a> -->
+							id="ProfessoresInativosTittle">
+							Profs. Inativos
+						</a>
 					</div>
 
 					<div 
@@ -83,6 +90,13 @@
 <script src="/dist/data-tables/jquery.dataTables.min.js"></script>
 <script src="/dist/data-tables/dataTables.semanticui.min.js"></script>
 <script src="/dist/data-tables/dataTables.scroller.min.js"></script>
+
+<!-- <script src="/dist/data-tables/buttons.semanticui.min.js"></script> -->
+
+<script type="text/javascript" src="/dist/data-tables/pdfmake.min.js"></script>
+<script type="text/javascript" src="/dist/data-tables/vfs_fonts.js"></script>
+<script type="text/javascript" src="/dist/data-tables/datatables.min.js"></script>
+
 <script src="/dist/js/md5.min.js"></script>
 <script src="/dist/semantic/semantic.min.js"></script>
 <script src="/dist/js/views/adminView.js"></script>

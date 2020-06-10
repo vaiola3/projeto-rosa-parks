@@ -1,3 +1,24 @@
 .boasVindasUsuario {
 	padding-bottom: 0px !important;
 }
+
+.dataTables_scroll {
+  padding-top: 18px;
+}
+
+.dt-buttons {
+  /*background-color: yellow !important;*/
+  /*position: absolute !important;*/
+  left: 5px;
+  top: 0px;
+  /*padding-top: 6px;*/
+  bottom: 6px;
+}
+
+.dataTables_filter {
+  /*background-color: yellow !important;*/
+  position: absolute !important;
+  right: 12px;
+  top: 0px;
+  padding-top: 18px;
+}
