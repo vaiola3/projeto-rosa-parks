@@ -1,6 +1,8 @@
 const botaoSair   = document.getElementById('botaoSair');
 const inputLogout = document.getElementById('LogOutSession');
 const formView    = document.getElementById('FormView');
+const logoUneafro = document.getElementById('logoUneafro');
+const nomeAutor   = document.getElementById('nomeAutor');
 
 const sair = function () {
     inputLogout.value = 'true';
@@ -33,3 +35,11 @@ $('.ui.menu a.item').on('click', function() {
 $('input[type=text]').val (function () {
     return this.value.toUpperCase();
 })
+
+logoUneafro.addEventListener('click', function () {
+    window.open("https://uneafrobrasil.org/",'_blank');
+});
+
+nomeAutor.addEventListener('click', function () {
+    window.open("https://github.com/vaiola3/projeto-rosa-parks",'_blank');
+});

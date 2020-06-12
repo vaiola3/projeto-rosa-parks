@@ -1,63 +1,73 @@
 .item-fixo {
-    position: absolute;
-    z-index: 999 !important;
+  position: absolute;
+  z-index: 999 !important;
 }
 
 .superior-esquerdo {
-    top: 1vh;
-    left: 0vh !important;
+  top: 1vh;
+  left: 0vh !important;
 }
 
 .superior-direito {
-    top: 5vh;
-    right: 20vh !important;
+  top: 5vh;
+  right: 20vh !important;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .titulo-medio {
-    font-size: 125% !important;
-    color: purple !important;
-    text-align: left;
+  font-size: 125% !important;
+  color: purple !important;
+  text-align: left;
 }
 
 .in-line {
-    line-height: 2.429em !important;
+  line-height: 2.429em !important;
 }
 
 .em-aula {
-    background-color: #c5df87 !important;
-    color: #212121 !important;
+  background-color: #c5df87 !important;
+  color: #212121 !important;
 }
 
 .caixa-alta { 
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .caixa-baixa { 
-    text-transform: lowercase;
+  text-transform: lowercase;
 }
 
 .item-vermelho { 
-    color: red !important;
+  color: red !important;
 }
 
 .item-laranja { 
-    color: #ff6c00 !important;
+  color: #ff6c00 !important;
 }
 
 .width35mm {
-    width: 3.5cm;
+  width: 3.5cm;
 }
 
 .scroll {   /*classe com qualquer nome*/
-    overflow:auto !important;
+  overflow:auto !important;
 }
 
 /*th, td { white-space: nowrap; }*/
 div.dataTables_wrapper {
-    width: 100%;
-    margin: 0 auto;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.logoAutor {
+  position: absolute;
+  left: 30px;
+  bottom: 30px;
 }

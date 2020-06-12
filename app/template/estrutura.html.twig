@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-        <link rel="stylesheet" type="text/css" href="/dist/semantic/semantic.min.css">        
-        <link rel="stylesheet" type="text/css" href="/dist/css/style.css">
-        <link rel="stylesheet" type="text/css" href="/dist/css/estrutura.css">
-        <link rel="icon" href="/img/logo-uneafro-small.jpg">
+  <link rel="stylesheet" type="text/css" href="/dist/semantic/semantic.min.css">        
+  <link rel="stylesheet" type="text/css" href="/dist/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/dist/css/estrutura.css">
+  <link rel="icon" href="/img/logo-uneafro-small.jpg">
 
-        <title>Cursinho Rosa Parks</title>
-    </head>
-    <body>
+  <title>Cursinho Rosa Parks</title>
+</head>
+<body>
 
-        <figure class="item-fixo superior-esquerdo">
-            <img src="/img/uneafro_peq.png">
-        </figure>
+  <figure class="item-fixo superior-esquerdo pointer" id="logoUneafro">
+    <img src="/img/uneafro_peq.png">
+  </figure>
 
-        {% block botaoLogout %}
-        <div class="item-fixo superior-direito">
-            <a class="ui purple big label" id="botaoSair">
-                <i class="sign {{iconeLogout}} alternate pink icon"></i>
-                {{mensagemLogout}}
-            </a>
-        </div>
-        {% endblock %}
+  {% block botaoLogout %}
+    <div class="item-fixo superior-direito">
+      <a class="ui purple big label" id="botaoSair">
+        <i class="sign {{iconeLogout}} alternate pink icon"></i>
+        {{mensagemLogout}}
+      </a>
+    </div>
+  {% endblock %}
 
-        <div id="carregando" class="hide">
-            <div class="ui active dimmer">
-                <div class="ui massive text loader">Cursinho Rosa Parks</div>
-            </div>
-        </div>
+  <div id="carregando" class="hide">
+    <div class="ui active dimmer">
+      <div class="ui massive text loader">Cursinho Rosa Parks</div>
+    </div>
+  </div>
 
-        {% block conteudoPagina %}
-        {% endblock %}
+  {% block conteudoPagina %}
+  {% endblock %}
 
-        {% block inputLogout %}
-        <input type="hidden" id="LogOutSession" name="LogOutSession" value="false">
-        {% endblock %}
+  {% block inputLogout %}
+    <input type="hidden" id="LogOutSession" name="LogOutSession" value="false">
+  {% endblock %}
 
-    </body>
-    <script src="/dist/js/template/estrutura.js"></script>
-    <script src="/dist/js/forEach.js"></script>
+</body>
+<script src="/dist/js/template/estrutura.js"></script>
+<script src="/dist/js/forEach.js"></script>
 </html>

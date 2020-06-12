@@ -1,131 +1,131 @@
-<?php
+  <?php
 
-  require_once('../vendor/autoload.php');
+    require_once('../vendor/autoload.php');
 
-	require_once("../app/config/env.php");
-	require_once("../app/config/Conexao.php");
+  	require_once("../app/config/Env.php");
+  	require_once("../app/config/Conexao.php");
 
-	require_once('controllers/Controller.php');
-	require_once('controllers/RegistroController.php');
-	require_once('controllers/UsuarioController.php');
-	
-	require_once('models/Model.php');
-	require_once('models/RegistroModel.php');
-	require_once('models/UsuarioModel.php');
+  	require_once('controllers/Controller.php');
+  	require_once('controllers/RegistroController.php');
+  	require_once('controllers/UsuarioController.php');
+  	
+  	require_once('models/Model.php');
+  	require_once('models/RegistroModel.php');
+  	require_once('models/UsuarioModel.php');
 
-  use Psr\Http\Message\ServerRequestInterface as Request;
-	use Psr\Http\Message\ResponseInterface as Response;
-  use Tuupola\Middleware\HttpBasicAuthentication as Auth;
+    use Psr\Http\Message\ServerRequestInterface as Request;
+  	use Psr\Http\Message\ResponseInterface as Response;
+    use Tuupola\Middleware\HttpBasicAuthentication as Auth;
 
-  #	config Slim / BasicAuth
+    #	config Slim / BasicAuth
 
-  $config = ['settings' => [
-    'addContentLengthHeader' => false,
-    'displayErrorDetails' => true,
-	]];
+    $config = ['settings' => [
+      'addContentLengthHeader' => false,
+      'displayErrorDetails' => true,
+  	]];
 
-  $app = new \Slim\App($config);
+    $app = new \Slim\App($config);
 
-  function basicAuth() {
-  	$basicAuth = new Tuupola\Middleware\HttpBasicAuthentication([
-      "users" => [
-        env('API_USER') => env('API_PASS')
-      ],
-      "secure" => false
-    ]);
+    function basicAuth() {
+    	$basicAuth = new Tuupola\Middleware\HttpBasicAuthentication([
+        "users" => [
+          Env::get('API_USER') => Env::get('API_PASS')
+        ],
+        "secure" => false
+      ]);
 
-    return $basicAuth;
-  };
+      return $basicAuth;
+    };
 
-	#	routes	GET
-	
-	$app->group('/registro/consultar', function () use ($app) {
-		$controller = new RegistroController;
+  	#	routes	GET
+  	
+  	$app->group('/registro/consultar', function () use ($app) {
+  		$controller = new RegistroController;
 
-		$app->get('/email/{email}', function ($request, $response, $args) use ($controller) {
+  		$app->get('/email/{email}', function ($request, $response, $args) use ($controller) {
 
-      $enderecoEmail = $args['email'];
+        $enderecoEmail = $args['email'];
 
-      $retorno = $controller->verificarEmail($enderecoEmail);
+        $retorno = $controller->verificarEmail($enderecoEmail);
 
-      $json = $response->withJson($retorno['data'], 201);
+        $json = $response->withJson($retorno['data'], 201);
 
-      return $json;
-		});
-	})->add(basicAuth());
+        return $json;
+  		});
+  	})->add(basicAuth());
 
-	$app->group('/usuario/consultar', function () use ($app) {
-		$controller = new UsuarioController;
+  	$app->group('/usuario/consultar', function () use ($app) {
+  		$controller = new UsuarioController;
 
-		$app->get('/{tipo}/{status}', function ($request, $response, $args) use ($controller) {
+  		$app->get('/{tipo}/{status}', function ($request, $response, $args) use ($controller) {
 
-			$tiposDisponiveis = [
-				'alunos' => true, 
-				'professores' => true
-			];
+  			$tiposDisponiveis = [
+  				'alunos' => true, 
+  				'professores' => true
+  			];
 
-			$statusDisponiveis = [
-				'ativos' => true, 
-				'inativos' => true, 
-				'aguardando' => true
-			];
+  			$statusDisponiveis = [
+  				'ativos' => true, 
+  				'inativos' => true, 
+  				'aguardando' => true
+  			];
 
-			$retorno = [];
+  			$retorno = [];
 
-			if(isset($tiposDisponiveis[$args['tipo']])){
-        if(isset($statusDisponiveis[$args['status']])){
-          $retorno = $controller->consultar($args['tipo'], $args['status']);
+  			if(isset($tiposDisponiveis[$args['tipo']])){
+          if(isset($statusDisponiveis[$args['status']])){
+            $retorno = $controller->consultar($args['tipo'], $args['status']);
+          }
         }
-      }
 
-  		$json = $response->withJson($retorno);
+    		$json = $response->withJson($retorno);
 
-  		return $json;
-		});
-	})->add(basicAuth());
+    		return $json;
+  		});
+  	})->add(basicAuth());
 
-	#	routes	POST
+  	#	routes	POST
 
-  $app->group('/usuario', function () use ($app) {
-    $controller = new UsuarioController;
-    
-    $app->post('/{acao}/{id}', function ($request, $response, $args) use ($controller) {
+    $app->group('/usuario', function () use ($app) {
+      $controller = new UsuarioController;
+      
+      $app->post('/{acao}/{id}', function ($request, $response, $args) use ($controller) {
 
-      $acoesDisponiveis = [
-        'ativar' => true, 
-        'inativar' => true
-      ];
+        $acoesDisponiveis = [
+          'ativar' => true, 
+          'inativar' => true
+        ];
 
-      $retorno = [];
+        $retorno = [];
 
-      if(isset($acoesDisponiveis[$args['acao']])){
-        $retorno = $controller->atualizarStatus($args['acao'], $args['id']);
-      }
+        if(isset($acoesDisponiveis[$args['acao']])){
+          $retorno = $controller->atualizarStatus($args['acao'], $args['id']);
+        }
 
-      $json = $response->withJson($retorno);
+        $json = $response->withJson($retorno);
 
-      return $json;
+        return $json;
 
-    });
-  })->add(basicAuth());
+      });
+    })->add(basicAuth());
 
-  $app->group('/registro', function () use ($app) {
-		$controller = new RegistroController;
-		
-		$app->post('/cadastrar', function ($request, $response, $args) use ($controller) {
+    $app->group('/registro', function () use ($app) {
+  		$controller = new RegistroController;
+  		
+  		$app->post('/cadastrar', function ($request, $response, $args) use ($controller) {
 
-			$dadosNovoUsuario = $request->getParams();
+  			$dadosNovoUsuario = $request->getParams();
 
-			$retornoController = $controller->cadastrarNovoUsuario($dadosNovoUsuario);
+  			$retornoController = $controller->cadastrarNovoUsuario($dadosNovoUsuario);
 
-			$json = $response->withJson($retornoController);
+  			$json = $response->withJson($retornoController);
 
-			return $json;
-		});
-  })->add(basicAuth());
+  			return $json;
+  		});
+    })->add(basicAuth());
 
-  #	run
+    #	run
 
-  $app->run();
+    $app->run();
 
- ?>
+   ?>

@@ -18,9 +18,9 @@
 			}
 		}
 
-		public function imprimirTela() {
+		public function imprimirTela($args = []) {
 			$model = $this->getModel();
-			$this->imprimirConteudo('loginView.html.twig',[]);
+			$this->imprimirConteudo('loginView.html.twig',$args);
 		}
 
 		private function logar() {
@@ -44,10 +44,22 @@
 
 				if($tipoUsuario == 'Administrador')
 					(new AdminController)->start();
-				// if($tipoUsuario == 'Professor')
-					// (new ProfessorController)->start();
+
+				/**
+				 *
+				 *	Atualmente os usuarios Aluno e Professor nao logam no sistema.
+				 *
+				 *	Em outra situacao executar:
+				 *		(new ProfessorController)->start();
+				 *  ou
+				 * 		(new AlunoController)->start();
+				 *
+				*/
+
+				if($tipoUsuario == 'Professor')
+					$this->imprimirTela(['MENSAGEM' => 'Atualmente usuários Professor não logam no sistema.']);
 				if($tipoUsuario == 'Aluno')
-					(new AlunoController)->start();
+					$this->imprimirTela(['MENSAGEM' => 'Atualmente usuários Aluno não logam no sistema.']);
 			}
 		}
 

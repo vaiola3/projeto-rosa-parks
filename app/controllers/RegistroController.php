@@ -20,20 +20,20 @@
 			$disciplinas   = $model->consultarDisciplinasCadastradas();
 
 			$args = [
-				'API_USER'  	 => env('API_USER'),
-				'API_PASS'       => env('API_PASS'),
-				'urlHost'        => env('APP_HOST'),
-				'etnias'         => $etnias,
-				'generos' 		 => $generos,
-				'escolaridades'  => $escolaridades,
-				'tiposUsuario'   => $tiposUsuario,
-				'disciplinas'    => $disciplinas,
-				'iconeLogout' 	 => 'in',
-				'mensagemLogout' => 'Logar'
+				'API_USER'  	 		=> Env::get('API_USER'),
+				'API_PASS'       	=> Env::get('API_PASS'),
+				'urlHost'        	=> Env::get('APP_HOST'),
+				'etnias'         	=> $etnias,
+				'generos'					=> $generos,
+				'escolaridades'  	=> $escolaridades,
+				'tiposUsuario'   	=> $tiposUsuario,
+				'disciplinas'    	=> $disciplinas,
+				'iconeLogout' 	 	=> 'in',
+				'mensagemLogout' 	=> 'Logar'
 			];
 
 			$this->imprimirConteudo('registroView.html.twig', $args);
 		}
 	}
 
- ?>
+?>

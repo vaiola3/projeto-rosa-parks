@@ -8,10 +8,10 @@
 
 		public static function getConexao(){
 			if(!isset(self::$conexao)){
-				$servidor = env('DB_HOST');
-				$usuario  = env('DB_USERNAME');
-				$senha    = env('DB_PASSWORD');
-				$nome 	  = env('DB_NAME');
+				$servidor = Env::get('DB_HOST');
+				$usuario  = Env::get('DB_USERNAME');
+				$senha    = Env::get('DB_PASSWORD');
+				$nome 	  = Env::get('DB_NAME');
 
 				self::$conexao = new mysqli($servidor, $usuario, $senha, $nome);
 

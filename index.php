@@ -4,7 +4,7 @@
 
   require_once('vendor/autoload.php');
 
-  require_once("app/config/env.php");
+  require_once("app/config/Env.php");
   require_once("app/config/Twig.php");
   require_once("app/config/Conexao.php");
 
@@ -18,12 +18,13 @@
   require_once("app/controllers/LoginController.php");
   require_once("app/controllers/RegistroController.php");
   require_once("app/controllers/AlunoController.php");
+  require_once("app/controllers/ProfessorController.php");
   require_once("app/controllers/AdminController.php");
 
   require_once("app/core/Core.php");
 
   session_start();
-  $_SESSION = [];
+  // $_SESSION = [];
 
   $core = new Core();
   $core->carregarConteudo();
