@@ -2,4 +2,4 @@
 vendor/*
 
 #   arquivo env
-app/config/env.php
+app/config/Env.php

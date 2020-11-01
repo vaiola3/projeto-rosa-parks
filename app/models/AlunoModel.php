@@ -1,7 +1,9 @@
 <?php
 
-    class AlunoModel extends Model {
-        #   model ...
-    }
+namespace RosaParks\Models;
 
- ?>
+class AlunoModel extends Model {
+    #   model ...
+}
+
+?>

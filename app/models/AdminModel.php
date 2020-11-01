@@ -1,7 +1,9 @@
 <?php
 
-    class AdminModel extends Model {
-        #   model ...
-    }
+namespace RosaParks\Models;
 
- ?>
+class AdminModel extends Model {
+    #   model ...
+}
+
+?>

@@ -3,5 +3,13 @@
         "twig/twig": "^2.0",
         "slim/slim": "3.*",
         "tuupola/slim-basic-auth": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "RosaParks\\Core\\": "app/core/",
+            "RosaParks\\Controllers\\": "app/controllers/",
+            "RosaParks\\Models\\": "app/models",
+            "RosaParks\\Config\\": "app/config"
+        }
     }
 }

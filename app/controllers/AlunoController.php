@@ -1,25 +1,30 @@
 <?php
 
-    class AlunoController extends Controller {
-        public function __construct() {
-			$this->setModel(new AlunoModel);
-			$this->setTwig(Twig::getInstancia());
-        }
+namespace RosaParks\Controllers;
 
-        public function start() {
-			$this->imprimirTela();
-        }
+use RosaParks\Config\Twig;
+use RosaParks\Models\AlunoModel;
 
-        public function imprimirTela() {
-            $model = $this->getModel();
-            
-            $args = [
-				'iconeLogout' 	 => 'out',
-				'mensagemLogout' => 'Sair'
-			];
-
-			$this->imprimirConteudo('alunoView.html.twig', $args);
-		}
+class AlunoController extends Controller {
+    public function __construct() {
+        $this->setModel(new AlunoModel);
+        $this->setTwig(Twig::getInstancia());
     }
+    
+    public function start() {
+        $this->imprimirTela();
+    }
+    
+    public function imprimirTela() {
+        $model = $this->getModel();
+        
+        $args = [
+            'iconeLogout' 	 => 'out',
+            'mensagemLogout' => 'Sair'
+        ];
+        
+        $this->imprimirConteudo('alunoView.html.twig', $args);
+    }
+}
 
- ?>
+?>
