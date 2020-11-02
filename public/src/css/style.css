@@ -1,5 +1,5 @@
 body {
-    background-image: url("/img/bckground.jpg") !important;
+    background-image: url("/public/img/bckground.jpg") !important;
     background-size: auto !important;
     padding-top: 64px;
 }

@@ -1,46 +1,50 @@
 <?php
 
-    class RegistroController extends Controller {
+namespace RosaParksAPI\Controllers;
 
-		public function __construct() {
-			$this->setModel(new RegistroModel);
+use RosaParksAPI\Models\RegistroModel;
+
+class RegistroController extends Controller {
+	
+	public function __construct() {
+		$this->setModel(new RegistroModel);
+	}
+	
+	public function cadastrarNovoUsuario($dadosNovoUsuario) {
+		$model = $this->getModel();
+		$dadosRetorno = ['erro' => false, 'mensagem' => ''];
+		
+		$erro = $this->validarParametros($dadosNovoUsuario);
+		
+		if(!$erro){
+			$erro = ($model->cadastrarNovoUsuario($dadosNovoUsuario) == 0);
 		}
-
-		public function cadastrarNovoUsuario($dadosNovoUsuario) {
-			$model = $this->getModel();
-			$dadosRetorno = ['erro' => false, 'mensagem' => ''];
-
-			$erro = $this->validarParametros($dadosNovoUsuario);
-
-			if(!$erro){
-				$erro = ($model->cadastrarNovoUsuario($dadosNovoUsuario) == 0);
-			}
-
-			if($erro){
-				$dadosRetorno['erro'] = true;
-				$dadosRetorno['mensagem'] = 'Ocorreu um erro!';
-			} else {
-				$dadosRetorno['erro'] = false;
-				$dadosRetorno['mensagem'] = 'Cadastro realizado com sucesso!';
-			}
-
-			return $dadosRetorno;
+		
+		if($erro){
+			$dadosRetorno['erro'] = true;
+			$dadosRetorno['mensagem'] = 'Ocorreu um erro!';
+		} else {
+			$dadosRetorno['erro'] = false;
+			$dadosRetorno['mensagem'] = 'Cadastro realizado com sucesso!';
 		}
-
-    	public function verificarEmail($email) {
-			$model = $this->getModel();
-
-			$existeRegistro = $model->existeEmail($email);
-
-    		$resposta = [
-    			'data' => [
-    				'valido' => ($existeRegistro) ? (false) : (true)
-    			]
-    		];
-
-    		return $resposta;
+		
+		return $dadosRetorno;
+	}
+	
+	public function verificarEmail($email) {
+		$model = $this->getModel();
+		
+		$existeRegistro = $model->existeEmail($email);
+		
+		$resposta = [
+			'data' => [
+				'valido' => ($existeRegistro) ? (false) : (true)
+				]
+			];
+			
+			return $resposta;
 		}
-
+		
 		private function validarParametros($parametros) {
 			$erro = false;
 			foreach($parametros as $key => $value){
@@ -51,6 +55,6 @@
 			return $erro;
 		}
 		
-    }
-
- ?>
+	}
+	
+	?>

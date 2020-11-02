@@ -119,7 +119,7 @@ const mostrarConteudo = function (titulosColunas, payload) {
     'paging': false,
     'dom': 'Bfrtip',
     'buttons': [
-        'copy', 'excel', 'pdf', 'print'
+        'copy', 'excel', 'print'
     ]
   }).draw();
 };

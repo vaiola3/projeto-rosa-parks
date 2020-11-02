@@ -19,7 +19,8 @@ class AdminController extends Controller {
     public function imprimirTela() {
         $model = $this->getModel();
         
-        $primeiroNome = explode(' ', $_SESSION['nome'])[0];
+        $arrayComNome = explode(' ', $_SESSION['nome']);
+        $primeiroNome = $arrayComNome[0];
         
         $args = [
             'API_USER'          => Env::get('API_USER'),
@@ -30,7 +31,7 @@ class AdminController extends Controller {
             'mensagemLogout'    => 'Sair'
         ];
         
-        $this->imprimirConteudo('adminView.html', $args);
+        $this->imprimirConteudo('adminView.html.twig', $args);
     }
 }
 

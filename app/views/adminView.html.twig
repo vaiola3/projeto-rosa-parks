@@ -1,0 +1,101 @@
+{% extends 'estrutura.html.twig' %}
+{% block conteudoPagina %}
+<link rel="stylesheet" href="/public/dist/data-tables/dataTables.semanticui.min.css">
+<link rel="stylesheet" href="/public/dist/data-tables/scroller.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="/public/dist/data-tables/datatables.min.css"/>
+ 
+<link rel="stylesheet" href="/public/src/css/views/adminView.css">
+<div class="ui container">
+	<div class="ui grid">
+
+		<div class="row boasVindasUsuario">
+			<div class="wide computer column">
+				<h1>Olá, {{ NOME_USUARIO }}</h1>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="sixteen wide computer column">
+
+				<div class="ui segment">
+					<div class="ui top attached tabular menu">
+						<div class="users-management-panel">
+							<div 
+								class="ui grey large button button-menu"
+								id="AlunosSemAcessoTittle">
+								Alunos Sem Acesso
+							</div>
+							<div 
+								class="ui green large button button-menu"
+								id="AlunosAtivosTittle">
+								Alunos Ativos
+							</div>
+							<div 
+								class="ui red large button button-menu"
+								id="AlunosInativosTittle">
+								Alunos Inativos
+							</div>
+							<div 
+								class="ui grey large button button-menu"
+								id="ProfessoresSemAcessoTittle">
+								Profs. Sem Acesso
+							</div>
+							<div 
+								class="ui green large button button-menu"
+								id="ProfessoresAtivosTittle">
+								Profs. Ativos
+							</div>
+							<div 
+								class="ui red large button button-menu"
+								id="ProfessoresInativosTittle">
+								Profs. Inativos
+							</div>
+						</div>
+					</div>
+
+					<div class="users-management-content">
+						<div 
+							id="conteudo"
+							class="ui bottom attached segment scroll">
+							{# <table
+								class="ui very compact celled small table" 
+								id="tabelaConteudo">
+								<thead>
+									<tr id="headersConteudo"></tr>
+								</thead>
+							</table> #}
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+	</div>
+
+	<form id="FormView" name="FormView" class="ui form" method="POST">
+
+		{% block inputLogout %}{{ parent() }}{% endblock %}
+				
+	</form>
+
+</div>
+<script>
+	const host = "{{urlHost}}";
+	const user = "{{API_USER}}";
+	const pass = "{{API_PASS}}";
+</script>
+<script src="/public/dist/js/jquery-3.4.1.min.js"></script>
+
+<script src="/public/dist/data-tables/jquery.dataTables.min.js"></script>
+<script src="/public/dist/data-tables/dataTables.semanticui.min.js"></script>
+<script src="/public/dist/data-tables/dataTables.scroller.min.js"></script>
+
+<script type="text/javascript" src="/public/dist/data-tables/pdfmake.min.js"></script>
+<script type="text/javascript" src="/public/dist/data-tables/vfs_fonts.js"></script>
+<script type="text/javascript" src="/public/dist/data-tables/datatables.min.js"></script>
+
+<script src="/public/dist/js/md5.min.js"></script>
+<script src="/public/dist/semantic/semantic.min.js"></script>
+<script src="/public/src/js/views/adminView.js"></script>
+{% endblock %}

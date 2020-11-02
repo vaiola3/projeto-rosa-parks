@@ -9,7 +9,9 @@
             "RosaParks\\Core\\": "app/core/",
             "RosaParks\\Controllers\\": "app/controllers/",
             "RosaParks\\Models\\": "app/models",
-            "RosaParks\\Config\\": "app/config"
+            "RosaParks\\Config\\": "app/config",
+            "RosaParksAPI\\Controllers\\": "api/controllers",
+            "RosaParksAPI\\Models\\": "api/models"
         }
     }
 }

@@ -232,9 +232,37 @@ const validarFormulario = function (){
 
 	let mensagemErro = "";
 
-	forEach(dadosNovoUsuario, function (elemento, prop) {
-		if(elemento.value == "")
-			mensagemErro = campoNaoPreenchido(elemento.titulo, mensagemErro);
+	const dadosObrigatorios = [
+		"nomeCompleto",
+		"cpf",
+		"dataNascimento",
+		"etnia",
+		"genero",
+		"telefone",
+		"escolaridade",
+		"cep",
+		"logradouro",
+		"numero",
+		"bairro",
+		"cidade",
+		"email",
+		"tipoUsuario",
+		"senha",
+		"resenha"
+	]
+
+	const tipoProfessor = 7
+	const tipoAluno = 8
+
+	if (selectTipoUsuario.value == tipoProfessor) dadosObrigatorios.push("disciplinas")
+	if (selectTipoUsuario.value == tipoAluno) dadosObrigatorios.push("escolaMedio")
+
+	forEach(dadosNovoUsuario, function (elemento, chaveElemento) {
+		if (dadosObrigatorios.indexOf(chaveElemento) != -1) {
+			if (elemento.value == "") {
+				mensagemErro = campoNaoPreenchido(elemento.titulo, mensagemErro);
+			}
+		}
 	})
 
 	if(!mensagemErro){
@@ -369,4 +397,5 @@ function simulaFormPreenchido(){
 	$( "#TipoUsuario" ).val( 7 );
 	$( "#Disciplinas" ).val( [1, 2, 3 ] );
 	$( "#EscolaEnsinoMedio" ).val( "EMEIEF" );
-}////simulaFormPreenchido();
+}
+// simulaFormPreenchido();

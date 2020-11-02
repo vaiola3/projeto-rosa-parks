@@ -1,0 +1,36 @@
+.boasVindasUsuario {
+    padding-bottom: 0px !important;
+}
+
+/* .dataTables_scroll {
+    padding-top: 18px;
+} */
+
+.dt-buttons {
+    /* background-color: aquamarine; */
+}
+
+.dataTables_filter {
+    margin: 3px 0px;
+
+    display: flex;
+    flex-flow: row-reverse wrap;
+    /* background-color: violet; */
+}
+
+.users-management-panel {
+    display: flex;
+    
+    flex-flow: row wrap;
+}
+
+.button-menu {
+    margin-bottom: 3px !important;
+}
+
+.users-management-content {
+    width: auto;
+    height: auto;
+
+    overflow: hidden;
+}

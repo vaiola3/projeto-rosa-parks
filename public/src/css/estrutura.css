@@ -17,6 +17,11 @@
   display: none;
 }
 
+.rosaparks-loading {
+  width: 100vw;
+  height: 100vh;
+}
+
 .titulo-medio {
   font-size: 125% !important;
   color: purple !important;
