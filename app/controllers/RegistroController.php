@@ -3,13 +3,14 @@
 namespace RosaParks\Controllers;
 
 use RosaParks\Config\Env;
-use RosaParks\Config\Twig;
-use RosaParks\Models\RegistroModel;
 
 class RegistroController extends Controller {
-	public function __construct() {
-		$this->setModel(new RegistroModel);
-		$this->setTwig(Twig::getInstancia());
+	public function __construct($di_models, $di_utils) {
+		$model_login = $di_models["registro"];
+		$twig = $di_utils["twig"];
+
+		$this->setModel($model_login);
+		$this->setTwig($twig);
 	}
 	
 	public function start() {

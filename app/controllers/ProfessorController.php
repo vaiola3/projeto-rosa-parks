@@ -2,13 +2,14 @@
 
 namespace RosaParks\Controllers;
 
-use RosaParks\Config\Twig;
-use RosaParks\Models\AlunoModel;
 
 class ProfessorController extends Controller {
-    public function __construct() {
-        $this->setModel(new AlunoModel);
-        $this->setTwig(Twig::getInstancia());
+    public function __construct($di_models, $di_utils) {
+        $model_professor = $di_models["login"];
+        $twig = $di_utils["twig"];
+        
+        $this->setModel($model_professor);
+        $this->setTwig($twig);
     }
     
     public function start() {

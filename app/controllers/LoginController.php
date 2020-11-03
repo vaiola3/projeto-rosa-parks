@@ -2,25 +2,31 @@
 
 namespace RosaParks\Controllers;
 
-use RosaParks\Config\Twig;
-use RosaParks\Models\LoginModel;
-use RosaParks\Controllers\AdminController;
-
 class LoginController extends Controller {
 	
-	public function __construct() {
-		$this->setModel(new LoginModel);
-		$this->setTwig(Twig::getInstancia());
+	public function __construct($di_models, $di_utils) {
+		$model_login = $di_models["login"];
+		$twig = $di_utils["twig"];
+
+		$this->setModel($model_login);
+		$this->setTwig($twig);
 	}
 	
-	public function start() {
+	public function start($di_controllers) {
+		session_start();
 		if($this->logar()){
-			$this->carregarEntidade();
+			$this->carregarEntidade($di_controllers);
 		} else if(isset($_SESSION['id_tipo_usuario'])){
-			$this->carregarEntidade();
+			$this->carregarEntidade($di_controllers);
 		} else {
 			$this->imprimirTela();
 		}
+	}
+
+	public function logout () {
+		session_start();
+		session_destroy();
+		$_SESSION = [];
 	}
 	
 	public function imprimirTela($args = []) {
@@ -39,32 +45,36 @@ class LoginController extends Controller {
 		return $loginValido;
 	}
 	
-	private function _carregarEntidade() {
-		var_dump($_SESSION);
-	}
-	
-	private function carregarEntidade() {
+	private function carregarEntidade($di_controllers) {
+		$admin_controller = $di_controllers["admin"];
+		// $aluno_controller = $di_controllers["aluno"];
+		// $professor_controller = $di_controllers["professor"];
+
 		if(isset($_SESSION['id'])){
-			$tipoUsuario = $_SESSION['tipo_usuario'];
+			$tipo_usuario = $_SESSION['tipo_usuario'];
 			
-			if($tipoUsuario == 'Administrador')
-			(new AdminController)->start();
+			if ($tipo_usuario == 'Administrador') $admin_controller->start();
 			
 			/**
-			*
 			*	Atualmente os usuarios Aluno e Professor nao logam no sistema.
 			*
 			*	Em outra situacao executar:
-			*		(new ProfessorController)->start();
-			*  ou
-			* 		(new AlunoController)->start();
-			*
+			*		$professor_controller->start();
+			*   ou
+			* 		$aluno_controller->start();
 			*/
 			
-			if($tipoUsuario == 'Professor')
-			$this->imprimirTela(['MENSAGEM' => 'Atualmente usuários Professor não logam no sistema.']);
-			if($tipoUsuario == 'Aluno')
-			$this->imprimirTela(['MENSAGEM' => 'Atualmente usuários Aluno não logam no sistema.']);
+			if ($tipo_usuario == 'Professor') {
+				$this->imprimirTela([
+					'MENSAGEM' => 'Atualmente usuários Professor não logam no sistema.'
+				]);
+			}
+
+			if ($tipo_usuario == 'Aluno') {
+				$this->imprimirTela([
+					'MENSAGEM' => 'Atualmente usuários Aluno não logam no sistema.'
+				]);
+			}
 		}
 	}
 	

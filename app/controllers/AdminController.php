@@ -3,13 +3,14 @@
 namespace RosaParks\Controllers;
 
 use RosaParks\Config\Env;
-use RosaParks\Config\Twig;
-use RosaParks\Models\AdminModel;
 
 class AdminController extends Controller {
-    public function __construct() {
-        $this->setModel(new AdminModel);
-        $this->setTwig(Twig::getInstancia());
+    public function __construct($di_models, $di_utils) {
+        $model_admin = $di_models["admin"];
+        $twig = $di_utils["twig"];
+        
+        $this->setModel($model_admin);
+        $this->setTwig($twig);
     }
     
     public function start() {
@@ -19,14 +20,14 @@ class AdminController extends Controller {
     public function imprimirTela() {
         $model = $this->getModel();
         
-        $arrayComNome = explode(' ', $_SESSION['nome']);
-        $primeiroNome = $arrayComNome[0];
+        $nomes = explode(' ', $_SESSION['nome']);
+        $primeiro_nome = $nomes[0];
         
         $args = [
             'API_USER'          => Env::get('API_USER'),
             'API_PASS'          => Env::get('API_PASS'),
             'urlHost'           => Env::get('APP_HOST'),
-            'NOME_USUARIO'      => $primeiroNome,
+            'NOME_USUARIO'      => $primeiro_nome,
             'iconeLogout' 	    => 'out',
             'mensagemLogout'    => 'Sair'
         ];

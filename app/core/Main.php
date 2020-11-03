@@ -2,37 +2,30 @@
 
 namespace RosaParks\Core;
 
-use RosaParks\Controllers\LoginController;
-use RosaParks\Controllers\RegistroController;
+final class Main {
+	private static function isSolicitacaoRegistro() {
+		return self::isTrue("getNewRegister");
+	}
 
-class Main {
-	private function verificarSolicitacaoRegistro() {
-		$parametro = $this->obterParametro('getNewRegister');
-		return ($parametro == "true");
+	private static function isSolicitacaoLogout () {
+		return self::isTrue("LogOutSession");
 	}
 	
-	private function verificarSolicitacaoLogout() {
-		$parametro = $this->obterParametro('LogOutSession');
-		if($parametro == "true"){
-			session_destroy();
-			$_SESSION = [];
-		}
-	}
-	
-	public function carregarConteudo() {
-		
-		$this->verificarSolicitacaoLogout();
-		
-		$solicitouCadastro = $this->verificarSolicitacaoRegistro();
-		
-		if($solicitouCadastro){
-			(new RegistroController)->start();
+	public static function carregarConteudo($di_controllers) {
+		$login_controller = $di_controllers["login"];
+		$registro_controller = $di_controllers["registro"];
+
+		if (self::isSolicitacaoRegistro()){
+			$registro_controller->start();
 		} else {
-			(new LoginController)->start();
+			if (self::isSolicitacaoLogout()) {
+				$login_controller->logout();
+			}
+			$login_controller->start($di_controllers);
 		}
 	}
 	
-	private function obterParametro($parametro) {
+	private static function obterParametro($parametro) {
 		$resultado = filter_input( 
 			INPUT_POST, 
 			$parametro, 
@@ -41,6 +34,11 @@ class Main {
 		);
 		
 		return $resultado;
+	}
+
+	private static function isTrue($nome_parametro) {
+		$parametro = self::obterParametro($nome_parametro);
+		return ($parametro == "true");
 	}
 	
 	#	getters / setters

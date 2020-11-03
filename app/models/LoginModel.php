@@ -3,27 +3,27 @@
 namespace RosaParks\Models;
 
 class LoginModel extends Model {
-    public function validaLogin($argEmail, $argSenha) {
+    public function validaLogin($param_email, $param_senha) {
         $resultado = false;
         
-        if($argEmail && $argSenha){
+        if($param_email && $param_senha){
             $conexao = $this->abrirConexao();
             
-            $email = $conexao->escape_string($argEmail);
-            $senha = $conexao->escape_string($argSenha);
+            $email = $conexao->escape_string($param_email);
+            $senha = $conexao->escape_string($param_senha);
             $senha = md5($senha);
             
             $query = "SELECT * FROM cadastros_usuarios ".
             "WHERE (email = '{$email}') ".
             "AND (senha = '{$senha}');";
             
-            $retornoQuery = $this->executarQuery($query);
+            $retorno_query = $this->executarQuery($query);
+
+            $qtde_registros = $retorno_query->num_rows;
+            $resultado = ($qtde_registros > 0);
             
-            $quantidadeRegistros = $retornoQuery->num_rows;
-            $resultado = ($quantidadeRegistros > 0);
-            
-            if($resultado)
-            $this->configurarSessao($retornoQuery->fetch_assoc());
+            if ($resultado) 
+                $this->configurarSessao($retorno_query->fetch_assoc());
         }
         
         return $resultado;
