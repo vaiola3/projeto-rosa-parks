@@ -25,7 +25,7 @@ class RegistroController extends Controller {
 			$dadosRetorno['mensagem'] = 'Ocorreu um erro!';
 		} else {
 			$dadosRetorno['erro'] = false;
-			$dadosRetorno['mensagem'] = 'Cadastro realizado com sucesso!';
+			$dadosRetorno['mensagem'] = 'Cadastro realizado com sucesso! Por gentileza responder também nosso forms do google no link abaixo.';
 		}
 		
 		return $dadosRetorno;
@@ -47,11 +47,11 @@ class RegistroController extends Controller {
 		
 		private function validarParametros($parametros) {
 			$erro = false;
-			foreach($parametros as $key => $value){
-				if($value == ''){
-					$erro = true;
-				}
-			}
+			// foreach($parametros as $key => $value){
+			// 	if($value == ''){
+			// 		$erro = true;
+			// 	}
+			// }
 			return $erro;
 		}
 		

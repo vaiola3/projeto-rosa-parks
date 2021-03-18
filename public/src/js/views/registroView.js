@@ -8,7 +8,7 @@ const inputComplemento 		= document.getElementById('Complemento');
 const inputBairro 			= document.getElementById('Bairro');
 const inputCidade 			= document.getElementById('Cidade');
 const inputEscolaMedio  	= document.getElementById('EscolaEnsinoMedio');
-const inputCpf          	= document.getElementById('CPF');
+// const inputCpf          	= document.getElementById('CPF');
 const inputDataNascimento	= document.getElementById('DataNascimento');
 const inputTelefone 		= document.getElementById('UsuarioTelefone')
 const inputEscolaridade 	= document.getElementById('UsuarioEscolaridade');
@@ -31,7 +31,7 @@ const validarEnderecoEmail = function () {
 	const enderecoEmail = inputEmail.value;
 
 	if(enderecoEmail != ""){
-		const url = 'http://' + host + '/api/registro/consultar/email/' + enderecoEmail;
+		const url = 'http://' + host + '/api/registro/consultar/email?address=' + enderecoEmail;
 
 		$.ajax({
 			type: "GET",
@@ -156,10 +156,10 @@ const validarFormulario = function (){
 			'titulo': 'Nome Completo',
 			'value': inputNome.value.trim()
 		},
-		'cpf': {
-			'titulo': 'CPF',
-			'value': inputCpf.value.trim()
-		},
+		// 'cpf': {
+		// 	'titulo': 'CPF',
+		// 	'value': inputCpf.value.trim()
+		// },
 		'dataNascimento': {
 			'titulo': 'Data Nascimento',
 			'value': formatarData(inputDataNascimento.value.trim())
@@ -266,8 +266,8 @@ const validarFormulario = function (){
 	})
 
 	if(!mensagemErro){
-		if(dadosNovoUsuario.cpf.value.length != 14)
-			mensagemErro += "\nFavor revisar o campo CPF.";
+		// if(dadosNovoUsuario.cpf.value.length != 14)
+		// 	mensagemErro += "\nFavor revisar o campo CPF.";
 		
 		if(dadosNovoUsuario.cep.value.length != 9)
 			mensagemErro += "\nFavor revisar o campo CEP.";
@@ -299,7 +299,7 @@ function consultarCep(numeroCep){
 
 $(inputNumero).mask( "99999999" );
 $(inputCep).mask( "99999-999" );
-$(inputCpf).mask( "999.999.999-99" );
+// $(inputCpf).mask( "999.999.999-99" );
 $(inputTelefone).mask( "(99) 9 9999-9999" );
 
 $(inputDataNascimento).mask( "99/99/9999" );
@@ -324,7 +324,7 @@ $( "#CalendarioDataNascimento" ).calendar( {
 const prepararDados = function (dadosNovoUsuario) {
 	const dadosParaEnvio = {
 		'nomeCompleto': dadosNovoUsuario.nomeCompleto.value,
-		'cpf': dadosNovoUsuario.cpf.value,
+		// 'cpf': dadosNovoUsuario.cpf.value,
 		'dataNascimento': dadosNovoUsuario.dataNascimento.value,
 		'etnia': dadosNovoUsuario.etnia.value,
 		'genero': dadosNovoUsuario.genero.value,
@@ -360,7 +360,6 @@ const enviarDados = function (dadosNovoUsuario) {
 		},
 		success: function (retorno){
 			window.alert(retorno.mensagem);
-			$(formView).submit();
 		},
 		error: function (response){
 			////	error
@@ -381,7 +380,7 @@ botaoEnviar.addEventListener('click', concluirCadastro);
 
 function simulaFormPreenchido(){
 	$( "#NomeCompleto" ).val( "JOAO TESTE" );
-	$( "#CPF" ).val( "999.999.999-99" );
+	// $( "#CPF" ).val( "999.999.999-99" );
 	$( "#DataNascimento" ).val( "01/01/1997" );
 	$( "#UsuarioEtnia" ).val( 11 );
 	$( "#UsuarioGenero" ).val( 13 );

@@ -12,6 +12,13 @@ use RosaParks\Config\Conexao;
 use RosaParksAPI\Controllers\RegistroController;
 use RosaParksAPI\Controllers\UsuarioController;
 
+#   utils
+
+function hasMailAddress(string $string): bool
+{
+    return !empty($string);
+}
+
 #	config Slim / BasicAuth
 
 $config = [
@@ -39,11 +46,18 @@ function applyBasicAuth() {
 $app->group('/registro/consultar', function () use ($app) {
     $controller = new RegistroController;
     
-    $app->get('/email/{address}', function ($request, $response, $args) use ($controller) {
+    $app->get('/email', function ($request, $response, $args) use ($controller) {
         
-        $enderecoEmail = $args['address'];
-        
-        $retorno = $controller->verificarEmail($enderecoEmail);
+        $enderecoEmail = $request->getQueryParam('address', $default = "");
+
+        $retorno = array (
+            'valido' => false
+        );
+
+        if (hasMailAddress($enderecoEmail))
+        {
+            $retorno = $controller->verificarEmail($enderecoEmail);
+        }
         
         $json = $response->withJson($retorno['data'], 201);
         

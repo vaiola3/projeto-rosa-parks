@@ -2,7 +2,6 @@
 
 {% block conteudoPagina %}
 
-<link rel="stylesheet" type="text/css" href="dist/semantic/calendar.min.css">
 <div style="height: 10%;"></div>
 <div class="ui container">
 	<div class="ui one column middle center aligned grid">
@@ -22,7 +21,7 @@
 					</div>
 				</div>	<!-- NOME COMPLETO -->
 
-				<div class="field">
+				{# <div class="field">
 					<label class="titulo-medio">CPF</label>
 					<div class="ui large icon input">
 						<input 
@@ -31,7 +30,8 @@
 							id="CPF"
 						placeholder="CPF">
 					</div>
-				</div>	<!-- CPF -->
+				</div>	 #}
+				<!-- CPF -->
 
 				<div class="field">
 					<label class="titulo-medio">Data de Nascimento</label>
@@ -245,6 +245,15 @@
 					Enviar
 				</a>
 
+				<h2>
+					Temos um segundo questionário disponível no  
+					<a 
+						href="https://forms.gle/XDLX7AK2HT6LnMVb7" 
+						target="_blank">
+						Google Forms
+					</a>
+				</h2>
+
 				<input 
 					type="hidden" 
 					name="CurrentView" 
@@ -258,6 +267,7 @@
 				value="false">
 
 				{% block inputLogout %}{{ parent() }}{% endblock %}
+
 			</form>
 		</div>
 	</div>

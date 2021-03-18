@@ -16,5 +16,5 @@ function loginWithUserTest(){
 }	////loginWithUserTest();
 
 nomeAutor.addEventListener('click', function () {
-    window.open("https://github.com/vaiola3/projeto-rosa-parks",'_blank');
+    window.open("https://github.com/discimus/projeto-rosa-parks",'_blank');
 });
