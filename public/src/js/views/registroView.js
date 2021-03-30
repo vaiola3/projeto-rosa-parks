@@ -24,6 +24,7 @@ const fieldDisciplinas  	= document.getElementById('FieldDisciplinas');
 const fieldEscolaMedio  	= document.getElementById('FieldEscEnsinoMedio');
 
 const botaoEnviar 			= document.getElementById('botaoEnviar');
+const carregando 			= document.getElementById('carregando');
 
 const validarEnderecoEmail = function () {
 
@@ -350,6 +351,8 @@ const prepararDados = function (dadosNovoUsuario) {
 const enviarDados = function (dadosNovoUsuario) {
 	const url = 'http://' + host + '/api/registro/cadastrar';
 
+	$(carregando).removeClass('hide');
+
 	$.ajax({
 		type: "POST",
 		url: url,
@@ -359,9 +362,19 @@ const enviarDados = function (dadosNovoUsuario) {
 			xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass));
 		},
 		success: function (retorno){
+			if ('erro' in retorno)
+			{
+				if (retorno.erro == false)
+				{
+					$(botaoEnviar).addClass('hide')
+				}
+			}
+
 			window.alert(retorno.mensagem);
+			$(carregando).addClass('hide');
 		},
 		error: function (response){
+			$(carregando).addClass('hide');
 			////	error
 		}
 	});

@@ -22,6 +22,7 @@ class Model {
 	
 	public function fecharConexao() {
 		if($this->getConexao() != null){
+			$conexao = $this->getConexao();
 			$conexao->close();
 			$this->setConexao(null);
 		}

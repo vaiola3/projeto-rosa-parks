@@ -141,16 +141,7 @@ class UsuarioModel extends Model {
                 
     public function consultarAlunosAguardandoAtivacao() {
         $usuariosRegistrados = $this->consultarUsuariosRegistrados();
-        $titulos = $this->carregarTitulos([
-            'Aluno', 
-            'ID', 
-            'Nome Completo', 
-            'Whatsapp',
-            'Nascimento', 
-            'Ano', 
-            'Email', 
-            'Escola', 
-        ]);
+        $titulos = $this->carregarTitulos($this->gerarArrayTitulosListagemAlunos());
                         
         $payload = [];
         
@@ -166,10 +157,14 @@ class UsuarioModel extends Model {
                 $conteudo[] = $item['id'];
                 $conteudo[] = $item['nome'];
                 $conteudo[] = $item['whatsapp'];
+                $conteudo[] = $item['cep'];
                 $conteudo[] = $item['data_nascimento'];
                 $conteudo[] = $item['ano_matricula'];
                 $conteudo[] = $item['email'];
                 $conteudo[] = $item['escola_ensino_medio'];
+                $conteudo[] = $item['etnia'];
+                $conteudo[] = $item['genero'];
+                $conteudo[] = $item['escolaridade'];
                 
                 $payload[] = $conteudo;
             }
@@ -183,16 +178,7 @@ class UsuarioModel extends Model {
                     
     public function consultarAlunosAtivos() {
         $usuariosRegistrados = $this->consultarUsuariosRegistrados();
-        $titulos = $this->carregarTitulos([
-            'Aluno', 
-            'ID', 
-            'Nome Completo', 
-            'Whatsapp',
-            'Nascimento', 
-            'Ano', 
-            'Email', 
-            'Escola', 
-            ]);
+        $titulos = $this->carregarTitulos($this->gerarArrayTitulosListagemAlunos());
             
         $payload = [];
         
@@ -208,10 +194,14 @@ class UsuarioModel extends Model {
                 $conteudo[] = $item['id'];
                 $conteudo[] = $item['nome'];
                 $conteudo[] = $item['whatsapp'];
+                $conteudo[] = $item['cep'];
                 $conteudo[] = $item['data_nascimento'];
                 $conteudo[] = $item['ano_matricula'];
                 $conteudo[] = $item['email'];
                 $conteudo[] = $item['escola_ensino_medio'];
+                $conteudo[] = $item['etnia'];
+                $conteudo[] = $item['genero'];
+                $conteudo[] = $item['escolaridade'];
                 
                 $payload[] = $conteudo;
             }
@@ -225,16 +215,7 @@ class UsuarioModel extends Model {
                         
     public function consultarAlunosInativos() {
         $usuariosRegistrados = $this->consultarUsuariosRegistrados();
-        $titulos = $this->carregarTitulos([
-            'Aluno', 
-            'ID', 
-            'Nome Completo', 
-            'Whatsapp',
-            'Nascimento', 
-            'Ano', 
-            'Email', 
-            'Escola', 
-        ]);
+        $titulos = $this->carregarTitulos($this->gerarArrayTitulosListagemAlunos());
             
         $payload = [];
         
@@ -250,10 +231,14 @@ class UsuarioModel extends Model {
                 $conteudo[] = $item['id'];
                 $conteudo[] = $item['nome'];
                 $conteudo[] = $item['whatsapp'];
+                $conteudo[] = $item['cep'];
                 $conteudo[] = $item['data_nascimento'];
                 $conteudo[] = $item['ano_matricula'];
                 $conteudo[] = $item['email'];
                 $conteudo[] = $item['escola_ensino_medio'];
+                $conteudo[] = $item['etnia'];
+                $conteudo[] = $item['genero'];
+                $conteudo[] = $item['escolaridade'];
                 
                 $payload[] = $conteudo;
             }
@@ -262,6 +247,24 @@ class UsuarioModel extends Model {
         return [
             'titulosColunas' => $titulos,
             'payload' => $payload
+        ];
+    }
+
+    private function gerarArrayTitulosListagemAlunos()
+    {
+        return [
+            'Aluno', 
+            'ID', 
+            'Nome Completo', 
+            'Whatsapp',
+            'CEP',
+            'Nascimento', 
+            'Inscrição', 
+            'Email', 
+            'Escola', 
+            'Etnia',
+            'Gênero',
+            'Escolaridade',
         ];
     }
 
